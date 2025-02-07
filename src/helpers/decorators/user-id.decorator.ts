@@ -10,6 +10,7 @@ export const UserId = createParamDecorator(
     }
 
     const token = request.headers.authorization.replace('Bearer ', '');
+
     const decoded: any = jwt.verify(token, process.env.JWT_KEY);
 
     return decoded.id;

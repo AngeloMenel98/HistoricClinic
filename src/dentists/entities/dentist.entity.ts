@@ -19,7 +19,7 @@ export class Dentist {
   name: string;
 
   @Column({ type: 'varchar', length: 30 })
-  lasName: string;
+  lastName: string;
 
   @Column({ type: 'varchar', length: 50 })
   professionalId: string;

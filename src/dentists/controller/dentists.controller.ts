@@ -6,18 +6,34 @@ import {
   Patch,
   Param,
   Delete,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { DentistsService } from '../service/dentists.service';
 import { CreateDentistDto } from '../dto/create-dentist.dto';
 import { UpdateDentistDto } from '../dto/update-dentist.dto';
+import { UserId } from 'src/helpers/decorators/user-id.decorator';
+import { ResDentistDto } from '../dto/response-dentist.dto';
 
 @Controller('dentists')
 export class DentistsController {
   constructor(private readonly dentistsService: DentistsService) {}
 
   @Post()
-  create(@Body() createDentistDto: CreateDentistDto) {
-    return this.dentistsService.create(createDentistDto);
+  @UsePipes(new ValidationPipe({ transform: true }))
+  async create(
+    @Body() createDentistDto: CreateDentistDto,
+    @UserId() userId: string,
+  ): Promise<ResDentistDto> {
+    const dentist = await this.dentistsService.create(createDentistDto, userId);
+
+    return {
+      id: dentist.id,
+      name: dentist.name,
+      lastName: dentist.lastName,
+      professionalId: dentist.professionalId,
+      userId: dentist.user.id,
+    };
   }
 
   @Get()
