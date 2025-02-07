@@ -9,10 +9,10 @@ import * as path from 'path';
       useFactory: async (configService: ConfigService) => ({
         type: 'postgres',
         host: configService.get<string>('DB_HOST'),
-        port: configService.get<number>('DB_PORT', 54321),
-        username: configService.get<string>('DB_USER', 'root'),
-        password: configService.get<string>('DB_PASSWORD', 'clinicVCP'),
-        database: configService.get<string>('DB_DATABASE', 'history_clinic'),
+        port: configService.get<number>('DB_PORT'),
+        username: configService.get<string>('DB_USER'),
+        password: configService.get<string>('DB_PASSWORD'),
+        database: configService.get<string>('DB_DATABASE'),
         autoLoadEntities: true,
         synchronize:
           configService.get<string>('NODE_ENV') === 'production' ? false : true,

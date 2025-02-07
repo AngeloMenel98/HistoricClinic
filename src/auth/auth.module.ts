@@ -3,19 +3,17 @@ import { JwtModule } from '@nestjs/jwt';
 import { AuthController } from './controller/auth.controller';
 import { AuthService } from './service/auth.service';
 import { UsersModule } from 'src/users/users.module';
-import { ConfigService } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
     JwtModule.registerAsync({
-      useFactory: async (configService: ConfigService) => {
-        const jwtKey = configService.get<string>('JWT_KEY');
-        return {
-          secret: 'HistoricClinicVCP',
-          signOptions: { expiresIn: '3h' },
-        };
-      },
+      imports: [ConfigModule],
       inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
+        secret: configService.get<string>('JWT_KEY'),
+        signOptions: { expiresIn: '3h' },
+      }),
     }),
     UsersModule,
   ],
