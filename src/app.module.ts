@@ -10,6 +10,17 @@ import { DataBaseModule } from './database/database.module';
 import { AppointmentsModule } from './appointments/appointments.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { SmokingHistoryModule } from './smokinghistory/smokinghistory.module';
+import { PatientAddInfoModule } from './patient-add-info/patient-add-info.module';
+import { LiverDiseaseModule } from './liverdisease/liverdisease.module';
+import { BloodPressureModule } from './blood-pressure/blood-pressure.module';
+import { InfectiousDiseaseModule } from './infectious-disease/infectious-disease.module';
+import { OpPatModule } from './op-pat/op-pat.module';
+import { OperationModule } from './operation/operation.module';
+import { PatMedModule } from './pat-med/pat-med.module';
+import { MedicalConditionsModule } from './medical-conditions/medical-conditions.module';
+import { MedicationPatModule } from './medication-pat/medication-pat.module';
+import { MedicationModule } from './medication/medication.module';
 
 @Module({
   imports: [
@@ -20,13 +31,23 @@ import { ConfigModule } from '@nestjs/config';
 
     AuthModule,
     AppointmentsModule,
+    BloodPressureModule,
     DataBaseModule,
     DentistsModule,
     DiagnosesModule,
+    InfectiousDiseaseModule,
+    LiverDiseaseModule,
+    MedicalConditionsModule,
+    MedicationPatModule,
+    MedicationModule,
+    OpPatModule,
+    OperationModule,
     PatientsModule,
+    PatientAddInfoModule,
+    PatMedModule,
     ProceduresModule,
+    SmokingHistoryModule,
     UsersModule,
-    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
