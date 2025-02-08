@@ -43,7 +43,7 @@ export class DentistsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.dentistsService.findOne(+id);
+    return this.dentistsService.findOne(id);
   }
 
   @Patch(':id')

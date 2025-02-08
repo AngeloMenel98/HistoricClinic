@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreatePatientDto } from '../dto/create-patient.dto';
 import { UpdatePatientDto } from '../dto/update-patient.dto';
 import { PatientRepository } from '../repository/patient.repository';
@@ -32,8 +32,14 @@ export class PatientsService {
     return `This action returns all patients`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} patient`;
+  async findOne(id: string) {
+    const dentist = await this.patientRepository.findOneBy({ id });
+
+    if (!dentist) {
+      throw new NotFoundException(`Patient with id ${id} not found`);
+    }
+
+    return dentist;
   }
 
   update(id: number, updatePatientDto: UpdatePatientDto) {

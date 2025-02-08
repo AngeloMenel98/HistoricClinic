@@ -21,7 +21,7 @@ export class Appointment {
   @Column({ type: 'timestamp' })
   appointmentDate: Date;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', nullable: true })
   notes: string;
 
   @CreateDateColumn({ type: 'timestamp' })

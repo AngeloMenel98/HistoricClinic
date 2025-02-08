@@ -33,6 +33,7 @@ export class AuthController {
   @Post('login')
   @UsePipes(new ValidationPipe({ transform: true }))
   login(@Body() loginDTO: LoginUserDTO) {
+    console.log(loginDTO);
     return this.authService.login(loginDTO);
   }
 }

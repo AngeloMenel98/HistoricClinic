@@ -6,28 +6,44 @@ import {
   Patch,
   Param,
   Delete,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
-import { AppointentsService } from '../service/appointments.service';
+import { AppointmentsService } from '../service/appointments.service';
 import { CreateAppointentDto } from '../dto/create-appointment.dto';
 import { UpdateAppointentDto } from '../dto/update-appointment.dto';
+import { UserId } from 'src/helpers/decorators/user-id.decorator';
+import { ResAppointDTO } from '../dto/response-appointment.dto';
 
-@Controller('appointents')
-export class AppointentsController {
-  constructor(private readonly appointentsService: AppointentsService) {}
+@Controller('appointments')
+export class AppointmentsController {
+  constructor(private readonly appointService: AppointmentsService) {}
 
   @Post()
-  create(@Body() createAppointentDto: CreateAppointentDto) {
-    return this.appointentsService.create(createAppointentDto);
+  @UsePipes(new ValidationPipe({ transform: true }))
+  async create(
+    @Body() appointDTO: CreateAppointentDto,
+    @UserId() userId: string,
+  ): Promise<ResAppointDTO> {
+    const appoint = await this.appointService.create(appointDTO, userId);
+
+    return {
+      id: appoint.id,
+      appointDate: appoint.appointmentDate,
+      patientId: appoint.patient.id,
+      dentistId: appoint.dentist.id,
+      notes: appoint.notes,
+    };
   }
 
   @Get()
   findAll() {
-    return this.appointentsService.findAll();
+    return this.appointService.findAll();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.appointentsService.findOne(+id);
+    return this.appointService.findOne(+id);
   }
 
   @Patch(':id')
@@ -35,11 +51,11 @@ export class AppointentsController {
     @Param('id') id: string,
     @Body() updateAppointentDto: UpdateAppointentDto,
   ) {
-    return this.appointentsService.update(+id, updateAppointentDto);
+    return this.appointService.update(+id, updateAppointentDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.appointentsService.remove(+id);
+    return this.appointService.remove(+id);
   }
 }

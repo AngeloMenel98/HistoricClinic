@@ -54,7 +54,6 @@ export class AuthService {
       loginDTO.username,
       loginDTO.email,
     );
-
     const isPasswordValid = await compareHash(loginDTO.password, user.password);
 
     if (!isPasswordValid) {

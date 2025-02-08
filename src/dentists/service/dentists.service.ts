@@ -1,10 +1,13 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateDentistDto } from '../dto/create-dentist.dto';
 import { UpdateDentistDto } from '../dto/update-dentist.dto';
 import { UsersService } from 'src/users/service/users.service';
 import { DentistRepository } from '../repository/dentist.repository';
 import { Dentist } from '../entities/dentist.entity';
-import { ResDentistDto } from '../dto/response-dentist.dto';
 
 @Injectable()
 export class DentistsService {
@@ -30,8 +33,14 @@ export class DentistsService {
     return `This action returns all dentists`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} dentist`;
+  async findOne(id: string) {
+    const dentist = await this.dentistRepo.findOneBy({ id });
+
+    if (!dentist) {
+      throw new NotFoundException(`Dentist with id ${id} not found`);
+    }
+
+    return dentist;
   }
 
   async findByProfessionalId(professionalId: string) {
