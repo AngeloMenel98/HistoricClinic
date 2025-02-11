@@ -18,4 +18,12 @@ export class ProcedureRepository extends Repository<Procedure> {
       return manager.save(procedure);
     });
   }
+
+  async findByCode(code: string) {
+    return this.createQueryBuilder('pro')
+      .where('pro.codeProcedure = :code', {
+        code,
+      })
+      .getOne();
+  }
 }

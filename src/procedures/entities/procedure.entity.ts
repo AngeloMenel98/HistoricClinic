@@ -13,11 +13,11 @@ export class Procedure {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', nullable: true })
   name: string;
 
   @Column({ type: 'varchar' })
-  code: string;
+  codeProcedure: string;
 
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;

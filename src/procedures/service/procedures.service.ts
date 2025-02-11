@@ -1,19 +1,41 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateProcedureDto } from '../dto/create-procedure.dto';
 import { UpdateProcedureDto } from '../dto/update-procedure.dto';
+import { ProcedureRepository } from '../repository/procedure.repository';
+import { Procedure } from '../entities/procedure.entity';
 
 @Injectable()
 export class ProceduresService {
-  create(createProcedureDto: CreateProcedureDto) {
-    return 'This action adds a new procedure';
+  constructor(private readonly procedureRepo: ProcedureRepository) {}
+  create(procedureDTO: CreateProcedureDto) {
+    const procedure = new Procedure();
+    procedure.codeProcedure = procedureDTO.code;
+    procedure.name = procedureDTO.name;
+
+    return this.procedureRepo.createProcedure(procedure);
   }
 
   findAll() {
     return `This action returns all procedures`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} procedure`;
+  async findById(id: string) {
+    const procedure = await this.procedureRepo.findOneBy({ id });
+    if (!procedure) {
+      throw new NotFoundException(`Procedure with Id #${id} not Found`);
+    }
+    return procedure;
+  }
+
+  async findByCodeOrCreate(code: string) {
+    const procedure = await this.procedureRepo.findByCode(code);
+
+    if (!procedure) {
+      const dto: CreateProcedureDto = { code };
+      return this.create(dto);
+    }
+
+    return procedure;
   }
 
   update(id: number, updateProcedureDto: UpdateProcedureDto) {

@@ -19,7 +19,7 @@ export class Appointment {
   id: string;
 
   @Column({ type: 'timestamp' })
-  appointmentDate: Date;
+  scheduledAt: Date;
 
   @Column({ type: 'varchar', nullable: true })
   notes: string;

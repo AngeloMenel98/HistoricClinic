@@ -27,7 +27,7 @@ export class ProceduresController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.proceduresService.findOne(+id);
+    return this.proceduresService.findById(id);
   }
 
   @Patch(':id')

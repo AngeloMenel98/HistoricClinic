@@ -9,5 +9,6 @@ import { Procedure } from './entities/procedure.entity';
   imports: [TypeOrmModule.forFeature([Procedure])],
   controllers: [ProceduresController],
   providers: [ProceduresService, ProcedureRepository],
+  exports: [ProceduresService],
 })
 export class ProceduresModule {}

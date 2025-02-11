@@ -10,8 +10,8 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { AppointmentsService } from '../service/appointments.service';
-import { CreateAppointentDto } from '../dto/create-appointment.dto';
-import { UpdateAppointentDto } from '../dto/update-appointment.dto';
+import { CreateAppointmentDto } from '../dto/create-appointment.dto';
+import { UpdateAppointmentDto } from '../dto/update-appointment.dto';
 import { UserId } from 'src/helpers/decorators/user-id.decorator';
 import { ResAppointDTO } from '../dto/response-appointment.dto';
 
@@ -22,17 +22,18 @@ export class AppointmentsController {
   @Post()
   @UsePipes(new ValidationPipe({ transform: true }))
   async create(
-    @Body() appointDTO: CreateAppointentDto,
+    @Body() appointDTO: CreateAppointmentDto,
     @UserId() userId: string,
   ): Promise<ResAppointDTO> {
     const appoint = await this.appointService.create(appointDTO, userId);
 
     return {
       id: appoint.id,
-      appointDate: appoint.appointmentDate,
+      scheduledAt: appoint.scheduledAt,
       patientId: appoint.patient.id,
       dentistId: appoint.dentist.id,
       notes: appoint.notes,
+      codeProcedure: appoint.procedure.codeProcedure,
     };
   }
 
@@ -49,7 +50,7 @@ export class AppointmentsController {
   @Patch(':id')
   update(
     @Param('id') id: string,
-    @Body() updateAppointentDto: UpdateAppointentDto,
+    @Body() updateAppointentDto: UpdateAppointmentDto,
   ) {
     return this.appointService.update(+id, updateAppointentDto);
   }

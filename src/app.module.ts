@@ -21,6 +21,7 @@ import { PatMedModule } from './pat-med/pat-med.module';
 import { MedicalConditionsModule } from './medical-conditions/medical-conditions.module';
 import { MedicationPatModule } from './medication-pat/medication-pat.module';
 import { MedicationModule } from './medication/medication.module';
+import { NotificationsModule } from './notifications/notifications.module';
 
 @Module({
   imports: [
@@ -48,6 +49,7 @@ import { MedicationModule } from './medication/medication.module';
     ProceduresModule,
     SmokingHistoryModule,
     UsersModule,
+    NotificationsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -6,18 +6,32 @@ import {
   Patch,
   Param,
   Delete,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { CreateDiagnosisDto } from '../dto/create-diagnosis.dto';
 import { UpdateDiagnosisDto } from '../dto/update-diagnosis.dto';
 import { DiagnosesService } from '../service/diagnoses.service';
+import { ResDiagnosisDTO } from '../dto/response-diagnosis.dto';
+import { UserId } from 'src/helpers/decorators/user-id.decorator';
 
 @Controller('diagnoses')
 export class DiagnosesController {
   constructor(private readonly diagnosesService: DiagnosesService) {}
 
   @Post()
-  create(@Body() createDiagnosisDto: CreateDiagnosisDto) {
-    return this.diagnosesService.create(createDiagnosisDto);
+  @UsePipes(new ValidationPipe({ transform: true }))
+  async create(
+    @Body() diagnosisDTO: CreateDiagnosisDto,
+    @UserId() userId: string,
+  ): Promise<ResDiagnosisDTO> {
+    const diagnosis = await this.diagnosesService.create(diagnosisDTO, userId);
+
+    return {
+      id: diagnosis.id,
+      description: diagnosis.description,
+      appointmentId: diagnosis.appointment.id,
+    };
   }
 
   @Get()

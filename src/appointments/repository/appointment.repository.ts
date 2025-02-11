@@ -18,4 +18,15 @@ export class AppointmentRepository extends Repository<Appointment> {
       return manager.save(appointment);
     });
   }
+
+  async findByIdWithInfo(id: string) {
+    return this.createQueryBuilder('a')
+      .innerJoin('a.patient', 'pat')
+      .innerJoin('a.dentist', 'dent')
+      .leftJoin('a.procedure', 'pro')
+      .leftJoin('a.diagnosis', 'diag')
+      .addSelect(['pat.id', 'dent.id', 'pro.id', 'diag.id'])
+      .where('a.id = :id', { id })
+      .getOne();
+  }
 }
