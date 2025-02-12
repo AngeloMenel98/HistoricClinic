@@ -2,12 +2,13 @@ import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { LogContext, LoggingService } from './logging.service';
-import { authConfig } from '../config/auth.config';
 import { filter } from 'rxjs';
+import { AuthConfigService } from '../config/auth.config';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private oauth = inject(OAuthService);
+  private authConfig = inject(AuthConfigService);
   private router = inject(Router);
   private logger = inject(LoggingService);
 
@@ -16,7 +17,7 @@ export class AuthService {
   }
 
   private configOAuth() {
-    this.oauth.configure(authConfig);
+    this.oauth.configure(this.authConfig.getConfig());
     this.oauth.setupAutomaticSilentRefresh();
 
     this.oauth.events
@@ -39,7 +40,7 @@ export class AuthService {
     }
   }
 
-  login() {
+  async login(): Promise<void> {
     this.oauth.initCodeFlow();
   }
 
