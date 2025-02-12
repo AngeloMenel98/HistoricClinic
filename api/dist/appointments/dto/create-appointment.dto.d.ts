@@ -1,5 +1,5 @@
 export declare class CreateAppointmentDto {
-    appointmentDate: Date;
+    scheduledAt: Date;
     code: string;
     patientId: string;
     dentistId: string;

@@ -21,7 +21,7 @@ __decorate([
     (0, class_validator_1.IsDate)(),
     (0, class_validator_1.IsNotEmpty)({ message: 'Date should not be empty' }),
     __metadata("design:type", Date)
-], CreateAppointmentDto.prototype, "appointmentDate", void 0);
+], CreateAppointmentDto.prototype, "scheduledAt", void 0);
 __decorate([
     (0, class_validator_1.Validate)(uuid_string_validator_1.IsUUIDOrString, ['Code']),
     (0, class_validator_1.IsOptional)(),

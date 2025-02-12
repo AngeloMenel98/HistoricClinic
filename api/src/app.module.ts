@@ -41,6 +41,7 @@ import { NotificationsModule } from './notifications/notifications.module';
     MedicalConditionsModule,
     MedicationPatModule,
     MedicationModule,
+    NotificationsModule,
     OpPatModule,
     OperationModule,
     PatientsModule,

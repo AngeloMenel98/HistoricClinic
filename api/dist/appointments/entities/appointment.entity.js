@@ -25,7 +25,7 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)({ type: 'timestamp' }),
     __metadata("design:type", Date)
-], Appointment.prototype, "appointmentDate", void 0);
+], Appointment.prototype, "scheduledAt", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: 'varchar', nullable: true }),
     __metadata("design:type", String)

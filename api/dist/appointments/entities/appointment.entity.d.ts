@@ -4,7 +4,7 @@ import { Patient } from 'src/patients/entities/patient.entity';
 import { Procedure } from 'src/procedures/entities/procedure.entity';
 export declare class Appointment {
     id: string;
-    appointmentDate: Date;
+    scheduledAt: Date;
     notes: string;
     createdAt: Date;
     updatedAt: Date;

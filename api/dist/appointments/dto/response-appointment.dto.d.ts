@@ -1,6 +1,6 @@
 export interface ResAppointDTO {
     id: string;
-    appointDate: Date;
+    scheduledAt: Date;
     patientId: string;
     dentistId: string;
     notes?: string;

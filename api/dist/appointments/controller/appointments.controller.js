@@ -26,7 +26,7 @@ let AppointmentsController = class AppointmentsController {
         const appoint = await this.appointService.create(appointDTO, userId);
         return {
             id: appoint.id,
-            appointDate: appoint.appointmentDate,
+            scheduledAt: appoint.scheduledAt,
             patientId: appoint.patient.id,
             dentistId: appoint.dentist.id,
             notes: appoint.notes,

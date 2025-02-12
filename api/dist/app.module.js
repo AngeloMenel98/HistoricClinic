@@ -30,6 +30,7 @@ const pat_med_module_1 = require("./pat-med/pat-med.module");
 const medical_conditions_module_1 = require("./medical-conditions/medical-conditions.module");
 const medication_pat_module_1 = require("./medication-pat/medication-pat.module");
 const medication_module_1 = require("./medication/medication.module");
+const notifications_module_1 = require("./notifications/notifications.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -51,6 +52,7 @@ exports.AppModule = AppModule = __decorate([
             medical_conditions_module_1.MedicalConditionsModule,
             medication_pat_module_1.MedicationPatModule,
             medication_module_1.MedicationModule,
+            notifications_module_1.NotificationsModule,
             op_pat_module_1.OpPatModule,
             operation_module_1.OperationModule,
             patients_module_1.PatientsModule,
@@ -59,6 +61,7 @@ exports.AppModule = AppModule = __decorate([
             procedures_module_1.ProceduresModule,
             smokinghistory_module_1.SmokingHistoryModule,
             users_module_1.UsersModule,
+            notifications_module_1.NotificationsModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
