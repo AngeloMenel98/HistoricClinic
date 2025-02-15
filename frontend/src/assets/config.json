@@ -1,5 +1,0 @@
-{
-  "apiUrl": "${API_URL}",
-  "googleClientId": "${GOOGLE_CLIENT_ID}",
-  "enableAnalytics": "${ENABLE_ANALYTICS}"
-}
