@@ -4,6 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '@services/auth/auth.service';
+import { link } from 'fs';
 
 @Component({
   selector: 'app-sidebar',
@@ -14,10 +15,11 @@ import { AuthService } from '@services/auth/auth.service';
 export class SideBarComponent {
   constructor(private authService: AuthService) {}
   items = [
+    { name: 'Dashboard', link: 'dashboard', icon: 'dashboard' },
     {
       name: 'Pacientes',
-      link: 'patients',
-      icon: 'account',
+      link: 'patient',
+      icon: 'account_circle',
     },
   ];
 }

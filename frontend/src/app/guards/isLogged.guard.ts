@@ -14,7 +14,7 @@ export const LoginGuard: CanActivateFn = (route, state) => {
 
   if (expiredSession) {
     authService.logOut();
-    router.navigate(['']);
+    router.navigate(['/dashboard']);
     return false;
   }
 

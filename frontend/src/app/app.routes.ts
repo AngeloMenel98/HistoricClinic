@@ -8,7 +8,7 @@ import { LayoutComponent } from '@components/layout/layout.component';
 
 export const routes: Routes = [
   {
-    path: 'login',
+    path: '',
     component: LoginComponent,
   },
   {
@@ -17,7 +17,7 @@ export const routes: Routes = [
     canActivate: [LoginGuard],
     children: [
       { path: 'dashboard', component: DashboardComponent },
-      // ... otras rutas
+      { path: 'patient', component: PatientComponent },
     ],
   },
 ];

@@ -66,7 +66,7 @@ export class LoginComponent {
         if (data.token) {
           this.authService.logInAndSaveToken(data.token);
 
-          this.router.navigate(['']);
+          this.router.navigate(['/dashboard']);
         }
       },
       error: (e) => {
