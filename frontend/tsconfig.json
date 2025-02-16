@@ -1,0 +1,38 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "@components/*": ["./app/components/*"],
+      "@environments/*": ["./environments/*"],
+      "@layout/*": ["./app/components/layout/*"],
+      "@models/*": ["./app/models/*"],
+      "@enums/*": ["./app/models/enums/*"],
+      "@services/*": ["./app/services/*"],
+      "@shared/*": ["./app/components/shared/*"],
+      "@styles/*": ["./app/styles/*"],
+      "@helpers/*": ["./app/helpers/*"],
+      "@errors/*": ["./app/errors/*"]
+    },
+    "outDir": "./dist/out-tsc",
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "bundler",
+    "importHelpers": true,
+    "target": "ES2022",
+    "module": "ES2022"
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  }
+}

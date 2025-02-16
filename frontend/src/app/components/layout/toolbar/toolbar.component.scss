@@ -1,0 +1,69 @@
+a {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+  
+    img {
+      height: 80%;
+    }
+  }
+  
+  .mat-toolbar {
+    gap: 4px;
+    height: 3.5rem;
+  }
+  
+  .custom-toolbar {
+    background-color: #037d50;
+    color: #b6d6b6;
+  }
+  
+  .icon-button {
+    color: #b6d6b6;
+  }
+  
+  small {
+    color: #b6d6b6;
+  }
+  
+  //*--------------------
+  app-sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .mat-sidenav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    width: 100%;
+    max-width: 13rem;
+    background-color: #b6d6b6;
+  }
+  
+  // *- -----------------
+  .mat-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .start-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  
+  .end-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1rem;
+  }

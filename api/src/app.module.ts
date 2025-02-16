@@ -23,6 +23,8 @@ import { MedicationPatModule } from './medication-pat/medication-pat.module';
 import { MedicationModule } from './medication/medication.module';
 import { NotificationsModule } from './notifications/notifications.module';
 
+import * as path from 'path';
+
 @Module({
   imports: [
     ConfigModule.forRoot({

@@ -14,8 +14,14 @@ import * as path from 'path';
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_DATABASE'),
         autoLoadEntities: true,
-        synchronize:
-          configService.get<string>('NODE_ENV') === 'production' ? false : true,
+        synchronize: configService.get<string>('NODE_ENV') !== 'production',
+        ssl:
+          configService.get('NODE_ENV') === 'production'
+            ? { rejectUnauthorized: false }
+            : false,
+        extra: {
+          connectionTimeout: 5000, // 5 segundos
+        },
       }),
       inject: [ConfigService],
     }),

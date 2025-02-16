@@ -1,8 +1,16 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  ForbiddenException,
+  Injectable,
+} from '@nestjs/common';
 import { UsersService } from 'src/users/service/users.service';
 import { JwtService } from '@nestjs/jwt';
 
-import axios from 'axios';
+import { compareHash, hashValue } from 'src/helpers/hash/bCrypt.helper';
+import { User } from 'src/users/entities/user.entity';
+import { LoginUserDTO } from '../dto/login-user.dto';
+import { CreateAuthUserDto } from '../dto/create-auth.dto';
 
 @Injectable()
 export class AuthService {
@@ -11,7 +19,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  /*async createUser(authDTO: CreateAuthUserDto) {
+  async createUser(authDTO: CreateAuthUserDto) {
     const existingUser = await this.userService.findByUsernameOrEmail(
       authDTO.username,
       authDTO.email,
@@ -46,6 +54,7 @@ export class AuthService {
       loginDTO.username,
       loginDTO.email,
     );
+
     const isPasswordValid = await compareHash(loginDTO.password, user.password);
 
     if (!isPasswordValid) {
@@ -64,8 +73,8 @@ export class AuthService {
     const token = this.jwtService.sign(payload);
 
     return { token };
-  }*/
-  async exchangeCodeForToken(code: string) {
+  }
+  /*async exchangeCodeForToken(code: string) {
     // 1. Validar código con proveedor OAuth
     const params = {
       code,
@@ -82,5 +91,5 @@ export class AuthService {
     );
 
     return data;
-  }
+  }*/
 }

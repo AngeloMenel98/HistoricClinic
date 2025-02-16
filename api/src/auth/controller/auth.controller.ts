@@ -17,25 +17,19 @@ import { AuthGuard } from '@nestjs/passport';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post('token')
-  async exchangeCode(@Body() codeDto: { code: string }) {
-    return this.authService.exchangeCodeForToken(codeDto.code);
+  @Post()
+  async create(@Body() authDTO: CreateAuthUserDto) {
+    const user = await this.authService.createUser(authDTO);
+
+    return {
+      id: user.id,
+      username: user.username,
+      role: user.role,
+    };
   }
 
-  /*@Post('userinfo')
-  @UsePipes(new ValidationPipe({ transform: true }))
+  @Post('login')
   login(@Body() loginDTO: LoginUserDTO) {
-    console.log(loginDTO);
     return this.authService.login(loginDTO);
-  }*/
-
-  @Get('userinfo')
-  @UseGuards(AuthGuard('jwt'))
-  async getUserInfo(@Req() req) {
-    return {
-      id: req.user.userId,
-      email: req.user.email,
-      roles: req.user.roles,
-    };
   }
 }
