@@ -1,0 +1,82 @@
+<mat-stepper linear orientation="vertical" #stepper>
+  <!-- Paso 1 -->
+  <mat-step [stepControl]="basicInfoForm" label="Datos Básicos">
+    <form [formGroup]="basicInfoForm">
+      <ng-template matStepContent>
+        <mat-form-field>
+          <mat-label>Nombre</mat-label>
+          <input matInput formControlName="name" required />
+          @if (basicInfoForm.get('name')?.invalid) {
+            <mat-error>Nombre obligatorio</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Apellido</mat-label>
+          <input matInput formControlName="lastName" required />
+          @if (basicInfoForm.get('lastName')?.invalid) {
+            <mat-error>Apellido obligatorio</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>DNI</mat-label>
+          <input matInput formControlName="dni" required maxlength="8" />
+
+          @if (basicInfoForm.get('dni')?.hasError('pattern')) {
+            <mat-error>Debe tener 8 dígitos numéricos</mat-error>
+          }
+          @if (basicInfoForm.get('dni')?.hasError('required')) {
+            <mat-error>DNI obligatorio</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Fecha Nacimiento</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            formControlName="birthDate"
+            required
+          />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          @if (basicInfoForm.get('birthDate')?.hasError('required')) {
+            <mat-error>Fecha de Nacimiento obligatorio</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Profesión</mat-label>
+          <input matInput formControlName="occupation" />
+        </mat-form-field>
+
+        <button mat-button matStepperNext [disabled]="basicInfoForm.invalid">
+          Siguiente
+        </button>
+      </ng-template>
+    </form>
+  </mat-step>
+
+  <!-- Paso 2 -->
+  <mat-step [stepControl]="additionalInfoForm" label="Información Adicional">
+    <form [formGroup]="additionalInfoForm">
+      <ng-template matStepContent>
+        <!-- Campos -->
+        <div class="button-group">
+          <button mat-button matStepperPrevious>Atrás</button>
+          <button
+            mat-button
+            matStepperNext
+            [disabled]="additionalInfoForm.invalid"
+          >
+            Siguiente
+          </button>
+        </div>
+      </ng-template>
+    </form>
+  </mat-step>
+</mat-stepper>

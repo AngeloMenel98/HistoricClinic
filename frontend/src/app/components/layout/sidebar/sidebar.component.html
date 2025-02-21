@@ -1,10 +1,10 @@
 <nav>
-    @for (item of items; track $index) {
+  @for (item of items; track $index) {
     <div>
       <button mat-button [routerLink]="item.link" class="nav-button">
         <p class="nav-text">{{ item.name }}</p>
         <mat-icon class="nav-icon">{{ item.icon }}</mat-icon>
       </button>
     </div>
-    }
+  }
 </nav>

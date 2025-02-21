@@ -1,12 +1,12 @@
 <mat-toolbar class="mat-container custom-toolbar">
-    <div class="start-container">
-      <button mat-icon-button (click)="sidenav.toggle()" class="icon-button">
-        <mat-icon>menu</mat-icon>
-      </button>
-      <a routerLink="/dashboard" routerLinkActive="active"><h3>Clinica</h3></a>
-    </div>
-  
-    @if(isLoggedIn) {
+  <div class="start-container">
+    <button mat-icon-button (click)="sidenav.toggle()" class="icon-button">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <a routerLink="/dashboard" routerLinkActive="active"><h3>Clinica</h3></a>
+  </div>
+
+  @if (isLoggedIn) {
     <div class="end-container">
       <small>{{ username }}</small>
       <button
@@ -19,15 +19,15 @@
         <mat-icon>logout</mat-icon>
       </button>
     </div>
-    }
-  </mat-toolbar>
-  
-  <mat-sidenav-container (backDropClick)="sidenav.close()">
-    <mat-sidenav #sidenav mode="side" [(opened)]="opened">
-      <app-sidebar />
-    </mat-sidenav>
-  
-    <mat-sidenav-content>
-      <router-outlet />
-    </mat-sidenav-content>
-  </mat-sidenav-container>
+  }
+</mat-toolbar>
+
+<mat-sidenav-container (backDropClick)="sidenav.close()">
+  <mat-sidenav #sidenav mode="side" [(opened)]="opened">
+    <app-sidebar />
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <router-outlet />
+  </mat-sidenav-content>
+</mat-sidenav-container>

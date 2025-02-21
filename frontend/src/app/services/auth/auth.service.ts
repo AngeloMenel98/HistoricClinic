@@ -26,7 +26,7 @@ export class AuthService {
     return this.http.post<{ token: string }>(
       `${this.apiURL}/auth/login`,
       user,
-      { headers }
+      { headers },
     );
   }
 

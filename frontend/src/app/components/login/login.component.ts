@@ -56,7 +56,7 @@ export class LoginComponent {
 
     if (!username || !password) {
       return this.snackBarService.open(
-        'Ingrese nombre de usuario y contraseña'
+        'Ingrese nombre de usuario y contraseña',
       );
     }
 

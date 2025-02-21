@@ -1,7 +1,7 @@
 @use 'variables' as *;
 
 a[routerLink] {
-  text-decoration: none; 
+  text-decoration: none;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -9,78 +9,77 @@ a[routerLink] {
   color: inherit;
 
   &:hover {
-    color: var(--focused); 
+    color: var(--focused);
   }
 
   img {
     height: 80%;
-    margin-right: 8px; 
+    margin-right: 8px;
   }
 }
 
 a[routerLink].active {
   border-bottom: 2px solid var(--accent-color);
 }
-  
-  .mat-toolbar {
-    gap: 4px;
-    height: 3.5rem;
-  }
-  
-  .custom-toolbar {
-    background-color: var(--primary-color);
-    color: var(--light-purple);
-  }
-  
-  .icon-button {
-    color: inherit;
-  }
-  
-  small {
-    font-weight: 550;
-    color: inherit;
-  }
-  
-  //*--------------------
-  app-sidebar {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 
-  }
+.mat-toolbar {
+  gap: 4px;
+  height: 3.5rem;
+}
 
-  .mat-sidenav-container {
-    background-color: inherit;
-  }
+.custom-toolbar {
+  background-color: var(--primary-color);
+  color: var(--light-purple);
+}
 
-  .mat-sidenav {
-    display: flex;
-    justify-content: center;
-    padding: 0.5rem;
-    width: 100%;
-    max-width: 13rem;
-    background-color: var(--light-purple);
-  }
-  
-  // *- -----------------
-  .mat-container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-  }
-  
-  .start-container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-  }
-  
-  .end-container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 1rem;
-  }
+.icon-button {
+  color: inherit;
+}
+
+small {
+  font-weight: 550;
+  color: inherit;
+}
+
+//*--------------------
+app-sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mat-sidenav-container {
+  background-color: inherit;
+}
+
+.mat-sidenav {
+  display: flex;
+  justify-content: center;
+  padding: 0.5rem;
+  width: 100%;
+  max-width: 13rem;
+  background-color: var(--light-purple);
+}
+
+// *- -----------------
+.mat-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.start-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.end-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+}
