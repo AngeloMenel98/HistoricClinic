@@ -1,9 +1,9 @@
 <mat-toolbar class="mat-container custom-toolbar">
     <div class="start-container">
-      <button mat-icon-button (click)="sidenav.toggle()">
-        <mat-icon class="icon-button">menu</mat-icon>
+      <button mat-icon-button (click)="sidenav.toggle()" class="icon-button">
+        <mat-icon>menu</mat-icon>
       </button>
-      <a routerLink="/" routerLinkActive="active"><h3>Clinica</h3></a>
+      <a routerLink="/dashboard" routerLinkActive="active"><h3>Clinica</h3></a>
     </div>
   
     @if(isLoggedIn) {

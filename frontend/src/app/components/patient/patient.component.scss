@@ -1,7 +1,64 @@
+@use 'variables' as *;
+@use "@angular/material" as mat;
+
 .container {
     display: flex;
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
     padding: 2rem;
+    background-color: inherit;
   }
+
+.button-row {
+    display: table-cell;
+    max-width: 600px;
+  }
+
+.button-row .mat-mdc-button-base {
+    margin: 8px 8px 8px 0;
+  }
+
+.flex-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    width: 200px;
+  }
+
+.product-button {
+    background-color: var(--primary-color);
+  }
+
+
+  .table-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding-top: 2rem;
+  }
+  
+ table.mat-elevation-z8 {
+    @include mat.elevation(8);
+
+    border: 4px solid var(--secondary-color);
+    border-radius: 15px;
+    background: center;
+  
+    width: 100%;
+  }
+
+.mat-mdc-cell,
+.mat-mdc-header-cell {
+  text-align: center;
+  color: var(--secondary-color);
+  font-size: 20px;
+  font-weight: 900;
+}
+

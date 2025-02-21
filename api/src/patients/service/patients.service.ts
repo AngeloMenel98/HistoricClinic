@@ -29,7 +29,12 @@ export class PatientsService {
   }
 
   findAll() {
-    return `This action returns all patients`;
+    const patients = this.patientRepository.findAll();
+
+    if (!patients) {
+      throw new NotFoundException(`There is any patient created.`);
+    }
+    return patients;
   }
 
   async findOne(id: string) {

@@ -17,4 +17,6 @@ export class PatientRepository extends Repository<Patient> {
       return manager.save(patient);
     });
   }
+
+  async findAll() {}
 }

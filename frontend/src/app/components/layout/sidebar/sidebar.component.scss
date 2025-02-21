@@ -5,12 +5,18 @@ nav {
       align-items: center;
       width: 100%;
       padding: 0.5rem 1rem;
+
+      &:hover {
+        background-color: var(--focused);
+      }
     }
   
     .nav-text {
-      color: #037d50;
+      color: var(--primary-color);
     }
     .nav-icon {
-      color: #037d50;
+      color: var(--primary-color);
     }
   }
+
+
