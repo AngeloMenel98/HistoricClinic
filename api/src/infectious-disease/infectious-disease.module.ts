@@ -9,5 +9,6 @@ import { InfectiousDisease } from './entities/infectious-disease.entity';
   imports: [TypeOrmModule.forFeature([InfectiousDisease])],
   controllers: [InfectiousDiseaseController],
   providers: [InfectiousDiseaseService, InfDisRepository],
+  exports: [InfDisRepository],
 })
 export class InfectiousDiseaseModule {}

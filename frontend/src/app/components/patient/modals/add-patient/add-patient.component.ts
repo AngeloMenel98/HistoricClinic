@@ -24,32 +24,32 @@ interface PatientData {
 @Component({
   selector: 'app-add-patient',
   imports: [
-    MatDialogModule,
+    MatStepperModule,
+    MatFormFieldModule,
     MatInputModule,
     MatIconModule,
     MatDatepickerModule,
-    MatStepperModule,
     MatButtonModule,
-    MatFormFieldModule,
     ReactiveFormsModule,
   ],
   templateUrl: './add-patient.component.html',
   styleUrl: './add-patient.component.scss',
 })
 export class AddPatientComponent {
-  form!: FormGroup;
+  form: FormGroup;
 
-  data: PatientData = inject(MAT_DIALOG_DATA);
+  data: PatientData;
 
   constructor(
     private readonly fb: FormBuilder,
     private dialogRef: MatDialogRef<AddPatientComponent>,
   ) {
-    this.initForm();
+    this.data = inject(MAT_DIALOG_DATA);
+    this.form = this.initForm();
   }
 
-  private initForm(): void {
-    this.form = this.fb.group({
+  private initForm(): FormGroup {
+    return this.fb.group({
       basicInfo: this.fb.group({
         name: [this.data?.patient?.name || '', Validators.required],
         lastName: [this.data?.patient?.lastName || '', Validators.required],

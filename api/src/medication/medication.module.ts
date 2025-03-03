@@ -9,5 +9,6 @@ import { Medication } from './entities/medication.entity';
   imports: [TypeOrmModule.forFeature([Medication])],
   controllers: [MedicationController],
   providers: [MedicationService, MedicationRepository],
+  exports: [MedicationRepository],
 })
 export class MedicationModule {}

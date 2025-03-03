@@ -10,7 +10,7 @@ export class PatMed {
   @PrimaryColumn()
   patientId: string;
 
-  @Column({ type: 'text' })
+  @Column({ type: 'text', nullable: true })
   info: string;
 
   @ManyToOne(() => MedicalCondition, (med) => med.patMeds)

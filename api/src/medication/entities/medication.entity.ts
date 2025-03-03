@@ -9,7 +9,7 @@ export class Medication {
   @Column({ type: 'varchar', length: 50 })
   name: string;
 
-  @Column({ type: 'text' })
+  @Column({ type: 'text', nullable: true })
   note: string;
 
   @OneToMany(() => MedicationPat, (medPat) => medPat.medication)

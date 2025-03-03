@@ -13,7 +13,7 @@ export class MedicationPat {
   @Column({ type: 'varchar' })
   dosage: string;
 
-  @Column({ type: 'text' })
+  @Column({ type: 'text', nullable: true })
   note: string;
 
   @ManyToOne(() => Medication, (medication) => medication.medPats)

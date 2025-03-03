@@ -9,5 +9,6 @@ import { BloodPressureRepository } from './repository/blood-pressure.repository'
   imports: [TypeOrmModule.forFeature([BloodPressure])],
   controllers: [BloodPressureController],
   providers: [BloodPressureService, BloodPressureRepository],
+  exports: [BloodPressureRepository],
 })
 export class BloodPressureModule {}

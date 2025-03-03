@@ -13,9 +13,9 @@ export class MedicationRepository extends Repository<Medication> {
     super(medicationRepository.target, medicationRepository.manager);
   }
 
-  async createCondition(patient: Medication) {
+  async createMedication(medications: Medication[]) {
     return this.dataSource.manager.transaction(async (manager) => {
-      return manager.save(patient);
+      return manager.save(medications);
     });
   }
 }

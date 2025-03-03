@@ -9,5 +9,6 @@ import { ConditionRepository } from './repository/medical-conditions.repository'
   imports: [TypeOrmModule.forFeature([MedicalCondition])],
   controllers: [MedicalConditionsController],
   providers: [MedicalConditionsService, ConditionRepository],
+  exports: [ConditionRepository],
 })
 export class MedicalConditionsModule {}
