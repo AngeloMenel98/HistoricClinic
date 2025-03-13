@@ -1,47 +1,130 @@
+::ng-deep .mat-step-header .mat-step-label {
+  color: var(--primary-color) !important; // Color para estados normales
+  font-weight: 500;
+}
+
 .container {
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-  background-color: var(--background-color);
-}
-
-.step-content {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-/* Cada subcategoría en columna con estilos personalizados */
-.subcategory {
-  display: flex;
-  flex-direction: column;
-  border: 1px solid var(--primary-color);
+  background-color: #f4f4f4;
   padding: 1rem;
-  border-radius: 4px;
-  background: var(--background-color);
+  min-height: 100vh;
+  box-sizing: border-box;
+
+  mat-stepper {
+    background-color: var(--background-color);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+
+    .step-content {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      gap: 2rem;
+    }
+
+    .subcategory {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+
+      h3 {
+        color: var(--primary-color);
+        margin: 0;
+        font-size: 1.1rem;
+        font-weight: 500;
+        border-bottom: 2px solid var(--primary-color);
+        padding-bottom: 0.5rem;
+      }
+
+      .fields {
+        display: flex;
+        flex-direction: column; // Campos internos en columna
+        gap: 1rem;
+        flex: 1 1 45%; // Ancho flexible
+        min-width: 300px;
+
+        mat-hint {
+          color: black;
+        }
+
+        mat-form-field {
+          width: 100%;
+
+          .mat-form-field-wrapper {
+            padding-bottom: 0;
+          }
+
+          .mat-form-field-underline {
+            background-color: rgba(0, 0, 0, 0.12);
+          }
+        }
+      }
+    }
+  }
+
+  .button-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+
+    button[mat-raised-button] {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 0.5rem 2rem;
+      transition: all 0.3s ease;
+
+      &:hover {
+        opacity: 0.9;
+        transform: translateY(-1px);
+      }
+
+      &:disabled {
+        background-color: #cccccc;
+        cursor: not-allowed;
+        transform: none;
+      }
+    }
+  }
+
+  mat-error {
+    font-size: 0.75rem;
+    color: #f44336;
+    margin-top: 0.25rem;
+  }
 }
 
-.subcategory h3 {
-  margin-top: 0;
-  margin-bottom: 1rem;
-  color: var(--primary-color);
-}
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+    min-height: auto;
 
-/* Inputs en fila (horizontal) dentro de cada subcategoría */
-.fields {
-  display: flex;
-  flex-direction: row;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
+    ::ng-deep mat-stepper {
+      .mat-step-content {
+        padding: 1rem;
 
-/* Para que un campo ocupe el 100% si es necesario */
-.full-width {
-  flex: 1;
-}
+        .subcategory {
+          .fields {
+            flex-direction: column;
 
-.button-container {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 1rem;
+            mat-form-field {
+              flex: 1 1 100%;
+              min-width: auto;
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+
+    .button-container {
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+
+      button {
+        width: 100%;
+      }
+    }
+  }
 }

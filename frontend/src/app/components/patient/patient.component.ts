@@ -13,7 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { formatDateTime } from '@helpers/date.helper';
 
 import { Patient } from '@models/patient/patient';
@@ -78,7 +78,10 @@ export class PatientComponent implements OnInit {
     'actions',
   ];
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
     this.loadPatients();
@@ -120,10 +123,7 @@ export class PatientComponent implements OnInit {
   }
 
   openAddPatient() {
-    this.matDialog.open(AddPatientComponent, {
-      width: '700px',
-      data: {}, // Datos vacíos
-    });
+    this.router.navigate(['/addPatient']);
   }
 
   onMenuItemClick(arg0: string, _t116: any) {

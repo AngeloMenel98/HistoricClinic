@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from '@components/login/login.component';
 import { LoginGuard } from './guards/isLogged.guard';
-import { AdminGuard } from './guards/isAdmin.guard';
 import { PatientComponent } from '@components/patient/patient.component';
 import { DashboardComponent } from '@components/dashboard/dashboard.component';
 import { LayoutComponent } from '@components/layout/layout.component';
+import { AddPatientComponent } from '@components/patient/modals/add-patient/add-patient.component';
 
 export const routes: Routes = [
   {
@@ -18,6 +18,10 @@ export const routes: Routes = [
     children: [
       { path: 'dashboard', component: DashboardComponent },
       { path: 'patient', component: PatientComponent },
+      {
+        path: 'addPatient',
+        component: AddPatientComponent,
+      },
     ],
   },
 ];

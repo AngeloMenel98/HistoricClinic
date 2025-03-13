@@ -1,4 +1,5 @@
-import { Component, inject } from '@angular/core';
+// add-patient.component.ts
+import { Component } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -6,23 +7,17 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import {
-  MAT_DIALOG_DATA,
-  MatDialogModule,
-  MatDialogRef,
-} from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-
-interface PatientData {
-  patient?: any;
-}
+import { ActivatedRoute, Router } from '@angular/router';
+import { PatientService } from '@services/patient/patient.service';
 
 @Component({
   selector: 'app-add-patient',
+  standalone: true,
   imports: [
     MatStepperModule,
     MatFormFieldModule,
@@ -37,57 +32,83 @@ interface PatientData {
 })
 export class AddPatientComponent {
   form: FormGroup;
-
-  data: PatientData;
+  isLoading = false;
+  errorMessage: string | null = null;
 
   constructor(
     private readonly fb: FormBuilder,
-    private dialogRef: MatDialogRef<AddPatientComponent>,
+    private route: ActivatedRoute,
+    private router: Router,
+    private patientService: PatientService,
   ) {
-    this.data = inject(MAT_DIALOG_DATA);
-    this.form = this.initForm();
+    const patientData = this.route.snapshot.data['patient'];
+    this.form = this.initForm(patientData);
   }
 
-  private initForm(): FormGroup {
+  private initForm(patientData?: any): FormGroup {
     return this.fb.group({
       basicInfo: this.fb.group({
-        name: [this.data?.patient?.name || '', Validators.required],
-        lastName: [this.data?.patient?.lastName || '', Validators.required],
+        name: [patientData?.name || '', Validators.required],
+        lastName: [patientData?.lastName || '', Validators.required],
         dni: [
-          this.data?.patient?.dni || '',
+          patientData?.dni || '',
           [Validators.required, Validators.pattern(/^\d{8}$/)],
         ],
-        birthDate: [this.data?.patient?.birthDate || null, Validators.required],
-        occupation: [this.data?.patient?.occupation || ''],
+        cuit: [patientData?.cuit || ''],
+        birthDate: [patientData?.birthDate || null, Validators.required],
+        occupation: [patientData?.occupation || ''],
+        address: [patientData?.address || ''],
+        phone: [
+          patientData?.phone || '',
+          [Validators.required, Validators.pattern(/^[0-9]{10}$/)],
+        ],
+        email: [
+          patientData?.email || '',
+          [Validators.required, Validators.email],
+        ],
       }),
       additionalInfo: this.fb.group({
-        address: [this.data?.patient?.address || ''],
-        phone: [this.data?.patient?.phone || ''],
-        email: [this.data?.patient?.email || '', Validators.email],
+        bloodPressure: [''],
+        medications: [''],
+
+        liverProblems: [''],
+        infDiseases: [''],
+        medicalConds: [''],
+        operations: [''],
+        smokingHistory: [''],
       }),
     });
   }
 
+  // Getter para el FormGroup de información básica
   get basicInfoForm(): FormGroup {
     return this.form.get('basicInfo') as FormGroup;
   }
 
-  get additionalInfoForm(): FormGroup {
+  // Getter para el FormGroup de información adicional
+  get medicHistForm(): FormGroup {
     return this.form.get('additionalInfo') as FormGroup;
   }
 
   onSubmit(): void {
     if (this.form.valid) {
-      const result = {
+      this.isLoading = true;
+      const patientData = {
         ...this.form.value.basicInfo,
         ...this.form.value.additionalInfo,
       };
 
-      if (this.data?.patient?.id) {
-        result.id = this.data.patient.id;
-      }
-
-      this.dialogRef.close(result);
+      this.patientService.savePatient(patientData).subscribe({
+        next: () => {
+          this.router.navigate(['/patient'], {
+            state: { successMessage: 'Paciente guardado exitosamente' },
+          });
+        },
+        error: (err) => {
+          this.isLoading = false;
+          this.errorMessage = 'Error al guardar: ' + err.message;
+        },
+      });
     }
   }
 }

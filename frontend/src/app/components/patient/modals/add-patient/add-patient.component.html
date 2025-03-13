@@ -11,19 +11,36 @@
               <mat-form-field appearance="fill">
                 <mat-label>Nombre</mat-label>
                 <input matInput formControlName="name" required />
-                <mat-error *ngIf="basicInfoForm.get('name')?.invalid">
-                  Nombre obligatorio
-                </mat-error>
+                @if (basicInfoForm.get('name')?.invalid) {
+                  <mat-error> Nombre obligatorio </mat-error>
+                }
               </mat-form-field>
               <mat-form-field appearance="fill">
                 <mat-label>Apellido</mat-label>
                 <input matInput formControlName="lastName" required />
-                <mat-error *ngIf="basicInfoForm.get('lastName')?.invalid">
-                  Apellido obligatorio
-                </mat-error>
+                @if (basicInfoForm.get('lastName')?.invalid) {
+                  <mat-error> Apellido obligatorio </mat-error>
+                }
               </mat-form-field>
-            </div>
-            <div class="fields">
+              <mat-form-field appearance="fill">
+                <mat-label>DNI</mat-label>
+                <input
+                  matInput
+                  #dni="matInput"
+                  formControlName="dni"
+                  required
+                  maxlength="8"
+                />
+                <mat-hint align="end">{{ dni.value.length || 0 }} / 8</mat-hint>
+                @if (basicInfoForm.get('dni')?.hasError('pattern')) {
+                  <mat-error> Debe tener 8 dígitos numéricos </mat-error>
+                }
+
+                @if (basicInfoForm.get('dni')?.hasError('required')) {
+                  <mat-error> DNI obligatorio </mat-error>
+                }
+              </mat-form-field>
+
               <mat-form-field appearance="fill">
                 <mat-label>Fecha Nacimiento</mat-label>
                 <input
@@ -37,80 +54,134 @@
                   [for]="picker"
                 ></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
-                <mat-error *ngIf="basicInfoForm.get('birthDate')?.invalid">
-                  Fecha de Nacimiento obligatoria
-                </mat-error>
+                @if (basicInfoForm.get('birthDate')?.invalid) {
+                  <mat-error> Fecha de Nacimiento obligatoria </mat-error>
+                }
               </mat-form-field>
             </div>
           </div>
 
-          <!-- Subcategoría 2: Datos de Identificación -->
+          <!-- Subcategoría 2 -->
           <div class="subcategory">
-            <h3>Datos de Identificación</h3>
+            <h3>Información de Contacto</h3>
             <div class="fields">
-              <mat-form-field appearance="fill">
-                <mat-label>DNI</mat-label>
-                <input matInput formControlName="dni" required maxlength="8" />
-                <mat-error
-                  *ngIf="basicInfoForm.get('dni')?.hasError('pattern')"
-                >
-                  Debe tener 8 dígitos numéricos
-                </mat-error>
-                <mat-error
-                  *ngIf="basicInfoForm.get('dni')?.hasError('required')"
-                >
-                  DNI obligatorio
-                </mat-error>
-              </mat-form-field>
               <mat-form-field appearance="fill">
                 <mat-label>Profesión</mat-label>
                 <input matInput formControlName="occupation" />
               </mat-form-field>
-            </div>
-          </div>
-
-          <!-- Botón para avanzar al siguiente step -->
-          <div class="button-container">
-            <button
-              mat-raised-button
-              color="primary"
-              matStepperNext
-              [disabled]="basicInfoForm.invalid"
-            >
-              Siguiente
-            </button>
-          </div>
-        </div>
-      </form>
-    </mat-step>
-
-    <!-- Step 2: Información Adicional -->
-    <mat-step [stepControl]="additionalInfoForm" label="Información Adicional">
-      <form [formGroup]="additionalInfoForm" (ngSubmit)="onSubmit()">
-        <div class="step-content">
-          <!-- Subcategoría: Información Adicional -->
-          <div class="subcategory">
-            <h3>Información Adicional</h3>
-            <div class="fields">
-              <mat-form-field appearance="fill" class="full-width">
-                <mat-label>Comentario</mat-label>
-                <textarea matInput formControlName="comment"></textarea>
+              <mat-form-field appearance="fill">
+                <mat-label>Numero de Celular</mat-label>
+                <span matTextPrefix>+54 &nbsp;</span>
+                <input matInput formControlName="phone" />
+                @if (basicInfoForm.get('dni')?.hasError('pattern')) {
+                  <mat-error> Debe tener 8 dígitos numéricos </mat-error>
+                }
+              </mat-form-field>
+              <mat-form-field appearance="fill">
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="email" />
+                @if (basicInfoForm.get('email')?.hasError('required')) {
+                  <mat-error>Email obligatorio</mat-error>
+                }
+                @if (basicInfoForm.get('email')?.hasError('email')) {
+                  <mat-error>Formato de email inválido</mat-error>
+                }
               </mat-form-field>
             </div>
           </div>
 
-          <!-- Botón para enviar (submit) -->
-          <div class="button-container">
-            <button mat-button matStepperPrevious>Atrás</button>
-            <button
-              mat-raised-button
-              color="primary"
-              type="submit"
-              [disabled]="additionalInfoForm.invalid"
-            >
-              Enviar
-            </button>
+          <!-- Subcategoría 3 -->
+          <div class="subcategory">
+            <h3>Extra</h3>
+            <div class="fields">
+              <mat-form-field appearance="fill">
+                <mat-label>Direccion</mat-label>
+                <input matInput formControlName="address" required />
+
+                @if (basicInfoForm.get('address')?.hasError('required')) {
+                  <mat-error> Direccion obligatorio </mat-error>
+                }
+              </mat-form-field>
+              <mat-form-field appearance="fill">
+                <mat-label>CUIT</mat-label>
+                <input matInput formControlName="cuit" />
+              </mat-form-field>
+            </div>
           </div>
+        </div>
+
+        <!-- Botón para avanzar al siguiente step -->
+        <div class="button-container">
+          <button
+            mat-raised-button
+            color="primary"
+            matStepperNext
+            [disabled]="basicInfoForm.invalid"
+          >
+            Siguiente
+          </button>
+        </div>
+      </form>
+    </mat-step>
+
+    <!-- Step 2: Historial Medico -->
+    <mat-step [stepControl]="medicHistForm" label="Historial Medico">
+      <form [formGroup]="medicHistForm" (ngSubmit)="onSubmit()">
+        <div class="step-content">
+          <!-- Subcategoría 1 -->
+          <div class="subcategory">
+            <h3>Nivel Actual</h3>
+            <div class="fields">
+              <mat-form-field appearance="fill">
+                <mat-label>Fumar</mat-label>
+                <input matInput formControlName="smokingHistory" />
+              </mat-form-field>
+              <mat-form-field appearance="fill">
+                <mat-label>Presion</mat-label>
+                <input matInput formControlName="bloodPressure" />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <!-- Subcategoría 2 -->
+          <div class="subcategory">
+            <h3>Historial</h3>
+            <div class="fields">
+              <mat-form-field appearance="fill">
+                <mat-label>Operaciones</mat-label>
+                <input matInput formControlName="operations" />
+              </mat-form-field>
+              <mat-form-field appearance="fill">
+                <mat-label>HDHD</mat-label>
+                <input matInput formControlName="infDiseases" />
+              </mat-form-field>
+              <mat-form-field appearance="fill">
+                <mat-label>Higado Problemas</mat-label>
+                <input matInput formControlName="liverProblems" />
+              </mat-form-field>
+              <mat-form-field appearance="fill">
+                <mat-label>Medicamentos</mat-label>
+                <input matInput formControlName="medications" />
+              </mat-form-field>
+              <mat-form-field appearance="fill">
+                <mat-label>Condiciones Medicas</mat-label>
+                <input matInput formControlName="medicalConds" />
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <!-- Botón para enviar (submit) -->
+        <div class="button-container">
+          <button mat-button matStepperPrevious>Atrás</button>
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="medicHistForm.invalid"
+          >
+            Enviar
+          </button>
         </div>
       </form>
     </mat-step>
