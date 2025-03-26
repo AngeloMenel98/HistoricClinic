@@ -4,7 +4,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '@services/auth/auth.service';
-import { link } from 'fs';
 
 @Component({
   selector: 'app-sidebar',
@@ -20,6 +19,11 @@ export class SideBarComponent {
       name: 'Pacientes',
       link: 'patient',
       icon: 'account_circle',
+    },
+    {
+      name: 'Calendario',
+      link: 'calendar',
+      icon: 'calendar_month',
     },
   ];
 }

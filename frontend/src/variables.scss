@@ -8,6 +8,9 @@ $secondary-color: #4a192c;
 $focused: #e9bfbb;
 $light-purple: #d6a6d8;
 
+$disabled-bgcol: #cccccc;
+$disabled-color: #666666;
+
 :root {
   --primary-color: #{$primary-color};
   --warn-color: #{$warn-color};
@@ -19,4 +22,7 @@ $light-purple: #d6a6d8;
   --light-purple: #{$light-purple};
 
   --secondary-color: #{$secondary-color};
+
+  --disabled-bgcol: #{$disabled-bgcol};
+  --disabled-color: #{$disabled-color};
 }

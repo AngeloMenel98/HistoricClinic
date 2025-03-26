@@ -1,189 +1,154 @@
 <div class="container">
-  <mat-stepper linear orientation="vertical" #stepper>
-    <!-- Step 1: Datos Básicos -->
-    <mat-step [stepControl]="basicInfoForm" label="Datos Básicos">
-      <form [formGroup]="basicInfoForm">
-        <div class="step-content">
-          <!-- Subcategoría 1: Información Personal -->
-          <div class="subcategory">
-            <h3>Información Personal</h3>
-            <div class="fields">
-              <mat-form-field appearance="fill">
-                <mat-label>Nombre</mat-label>
-                <input matInput formControlName="name" required />
-                @if (basicInfoForm.get('name')?.invalid) {
-                  <mat-error> Nombre obligatorio </mat-error>
-                }
-              </mat-form-field>
-              <mat-form-field appearance="fill">
-                <mat-label>Apellido</mat-label>
-                <input matInput formControlName="lastName" required />
-                @if (basicInfoForm.get('lastName')?.invalid) {
-                  <mat-error> Apellido obligatorio </mat-error>
-                }
-              </mat-form-field>
-              <mat-form-field appearance="fill">
-                <mat-label>DNI</mat-label>
-                <input
-                  matInput
-                  #dni="matInput"
-                  formControlName="dni"
-                  required
-                  maxlength="8"
-                />
-                <mat-hint align="end">{{ dni.value.length || 0 }} / 8</mat-hint>
-                @if (basicInfoForm.get('dni')?.hasError('pattern')) {
-                  <mat-error> Debe tener 8 dígitos numéricos </mat-error>
-                }
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-grid">
+    <!-- Sección de Información Personal -->
+    <div class="form-section">
+      <h2>Información Personal</h2>
 
-                @if (basicInfoForm.get('dni')?.hasError('required')) {
-                  <mat-error> DNI obligatorio </mat-error>
-                }
-              </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Nombre del Paciente</mat-label>
+        <input
+          matInput
+          formControlName="name"
+          required
+          autocomplete="given-name"
+        />
+        @if (form.get('name')?.hasError('required')) {
+          <mat-error>Nombre requerido</mat-error>
+        }
+      </mat-form-field>
 
-              <mat-form-field appearance="fill">
-                <mat-label>Fecha Nacimiento</mat-label>
-                <input
-                  matInput
-                  [matDatepicker]="picker"
-                  formControlName="birthDate"
-                  required
-                />
-                <mat-datepicker-toggle
-                  matSuffix
-                  [for]="picker"
-                ></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-                @if (basicInfoForm.get('birthDate')?.invalid) {
-                  <mat-error> Fecha de Nacimiento obligatoria </mat-error>
-                }
-              </mat-form-field>
-            </div>
-          </div>
+      <mat-form-field appearance="fill">
+        <mat-label>Apellido del Paciente</mat-label>
+        <input
+          matInput
+          formControlName="lastName"
+          required
+          autocomplete="family-name"
+        />
+        @if (form.get('lastName')?.hasError('required')) {
+          <mat-error>Apellido requerido</mat-error>
+        }
+      </mat-form-field>
 
-          <!-- Subcategoría 2 -->
-          <div class="subcategory">
-            <h3>Información de Contacto</h3>
-            <div class="fields">
-              <mat-form-field appearance="fill">
-                <mat-label>Profesión</mat-label>
-                <input matInput formControlName="occupation" />
-              </mat-form-field>
-              <mat-form-field appearance="fill">
-                <mat-label>Numero de Celular</mat-label>
-                <span matTextPrefix>+54 &nbsp;</span>
-                <input matInput formControlName="phone" />
-                @if (basicInfoForm.get('dni')?.hasError('pattern')) {
-                  <mat-error> Debe tener 8 dígitos numéricos </mat-error>
-                }
-              </mat-form-field>
-              <mat-form-field appearance="fill">
-                <mat-label>Email</mat-label>
-                <input matInput formControlName="email" />
-                @if (basicInfoForm.get('email')?.hasError('required')) {
-                  <mat-error>Email obligatorio</mat-error>
-                }
-                @if (basicInfoForm.get('email')?.hasError('email')) {
-                  <mat-error>Formato de email inválido</mat-error>
-                }
-              </mat-form-field>
-            </div>
-          </div>
+      <mat-form-field appearance="fill">
+        <mat-label>Fecha de Nacimiento</mat-label>
+        <input matInput type="date" formControlName="birthDate" required />
+        @if (form.get('birthDate')?.hasError('required')) {
+          <mat-error>Fecha requerida</mat-error>
+        }
+      </mat-form-field>
+    </div>
 
-          <!-- Subcategoría 3 -->
-          <div class="subcategory">
-            <h3>Extra</h3>
-            <div class="fields">
-              <mat-form-field appearance="fill">
-                <mat-label>Direccion</mat-label>
-                <input matInput formControlName="address" required />
+    <!-- Sección de Documentación -->
+    <div class="form-section">
+      <h2>Documentación</h2>
 
-                @if (basicInfoForm.get('address')?.hasError('required')) {
-                  <mat-error> Direccion obligatorio </mat-error>
-                }
-              </mat-form-field>
-              <mat-form-field appearance="fill">
-                <mat-label>CUIT</mat-label>
-                <input matInput formControlName="cuit" />
-              </mat-form-field>
-            </div>
-          </div>
-        </div>
+      <mat-form-field appearance="fill">
+        <mat-label>DNI</mat-label>
+        <input
+          matInput
+          type="number"
+          formControlName="dni"
+          required
+          autocomplete="off"
+        />
+        @if (form.get('dni')?.hasError('required')) {
+          <mat-error>DNI requerido</mat-error>
+        }
+      </mat-form-field>
 
-        <!-- Botón para avanzar al siguiente step -->
-        <div class="button-container">
-          <button
-            mat-raised-button
-            color="primary"
-            matStepperNext
-            [disabled]="basicInfoForm.invalid"
-          >
-            Siguiente
-          </button>
-        </div>
-      </form>
-    </mat-step>
+      <mat-form-field appearance="fill">
+        <mat-label>CUIT</mat-label>
+        <input
+          matInput
+          type="number"
+          formControlName="cuit"
+          required
+          autocomplete="off"
+        />
+        @if (form.get('cuit')?.hasError('required')) {
+          <mat-error>CUIT requerido</mat-error>
+        }
+      </mat-form-field>
+    </div>
 
-    <!-- Step 2: Historial Medico -->
-    <mat-step [stepControl]="medicHistForm" label="Historial Medico">
-      <form [formGroup]="medicHistForm" (ngSubmit)="onSubmit()">
-        <div class="step-content">
-          <!-- Subcategoría 1 -->
-          <div class="subcategory">
-            <h3>Nivel Actual</h3>
-            <div class="fields">
-              <mat-form-field appearance="fill">
-                <mat-label>Fumar</mat-label>
-                <input matInput formControlName="smokingHistory" />
-              </mat-form-field>
-              <mat-form-field appearance="fill">
-                <mat-label>Presion</mat-label>
-                <input matInput formControlName="bloodPressure" />
-              </mat-form-field>
-            </div>
-          </div>
+    <!-- Sección de Contacto -->
+    <div class="form-section">
+      <h2>Datos de Contacto</h2>
 
-          <!-- Subcategoría 2 -->
-          <div class="subcategory">
-            <h3>Historial</h3>
-            <div class="fields">
-              <mat-form-field appearance="fill">
-                <mat-label>Operaciones</mat-label>
-                <input matInput formControlName="operations" />
-              </mat-form-field>
-              <mat-form-field appearance="fill">
-                <mat-label>HDHD</mat-label>
-                <input matInput formControlName="infDiseases" />
-              </mat-form-field>
-              <mat-form-field appearance="fill">
-                <mat-label>Higado Problemas</mat-label>
-                <input matInput formControlName="liverProblems" />
-              </mat-form-field>
-              <mat-form-field appearance="fill">
-                <mat-label>Medicamentos</mat-label>
-                <input matInput formControlName="medications" />
-              </mat-form-field>
-              <mat-form-field appearance="fill">
-                <mat-label>Condiciones Medicas</mat-label>
-                <input matInput formControlName="medicalConds" />
-              </mat-form-field>
-            </div>
-          </div>
-        </div>
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          type="email"
+          formControlName="email"
+          required
+          autocomplete="email"
+        />
+        @if (form.get('email')?.hasError('required')) {
+          <mat-error>Email requerido</mat-error>
+        }
+        @if (form.get('email')?.hasError('email')) {
+          <mat-error>Formato de email inválido</mat-error>
+        }
+      </mat-form-field>
 
-        <!-- Botón para enviar (submit) -->
-        <div class="button-container">
-          <button mat-button matStepperPrevious>Atrás</button>
-          <button
-            mat-raised-button
-            color="primary"
-            type="submit"
-            [disabled]="medicHistForm.invalid"
-          >
-            Enviar
-          </button>
-        </div>
-      </form>
-    </mat-step>
-  </mat-stepper>
+      <mat-form-field appearance="fill">
+        <mat-label>Teléfono/Celular</mat-label>
+        <input
+          matInput
+          type="tel"
+          formControlName="phoneNumber"
+          required
+          autocomplete="tel"
+        />
+        @if (form.get('phoneNumber')?.hasError('required')) {
+          <mat-error>Teléfono requerido</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Dirección</mat-label>
+        <input
+          matInput
+          formControlName="address"
+          required
+          autocomplete="street-address"
+        />
+        @if (form.get('address')?.hasError('required')) {
+          <mat-error>Dirección requerida</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <!-- Sección Adicional -->
+    <div class="form-section">
+      <h2>Información Adicional</h2>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Profesión</mat-label>
+        <input matInput formControlName="occupation" required />
+        @if (form.get('occupation')?.hasError('required')) {
+          <mat-error>Profesión requerida</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <div class="form-actions">
+      <button mat-raised-button class="cancel-button" (click)="onCancel()">
+        Cancelar Formulario
+      </button>
+    </div>
+    <div class="form-actions">
+      <button
+        mat-raised-button
+        class="product-button"
+        type="submit"
+        [disabled]="!form.valid"
+      >
+        <mat-icon>add</mat-icon>
+        Agregar Paciente
+      </button>
+    </div>
+  </form>
 </div>

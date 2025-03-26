@@ -12,13 +12,10 @@ export class PatientService {
   private apiURL = environment.apiURL;
 
   getAll(): Observable<Patient[]> {
-    return this.http.get<Patient[]>(`${this.apiURL}/petition/user`);
+    return this.http.get<Patient[]>(`${this.apiURL}/patients`);
   }
 
   savePatient(patientData: any): Observable<Patient> {
-    return this.http.post<Patient>(
-      `${this.apiURL}/patients/${patientData.id}`,
-      patientData,
-    );
+    return this.http.post<Patient>(`${this.apiURL}/patients`, patientData);
   }
 }

@@ -5,6 +5,7 @@ import { PatientComponent } from '@components/patient/patient.component';
 import { DashboardComponent } from '@components/dashboard/dashboard.component';
 import { LayoutComponent } from '@components/layout/layout.component';
 import { AddPatientComponent } from '@components/patient/modals/add-patient/add-patient.component';
+import { CalendarComponent } from '@components/calendar/calendar.component';
 
 export const routes: Routes = [
   {
@@ -22,6 +23,7 @@ export const routes: Routes = [
         path: 'addPatient',
         component: AddPatientComponent,
       },
+      { path: 'calendar', component: CalendarComponent },
     ],
   },
 ];

@@ -22,7 +22,7 @@ export class AuthService {
 
   logIn(user: Login): Observable<{ token: string }> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    console.log(user);
+
     return this.http.post<{ token: string }>(
       `${this.apiURL}/auth/login`,
       user,

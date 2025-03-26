@@ -1,25 +1,23 @@
-// add-patient.component.ts
 import { Component } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
-  ReactiveFormsModule,
   Validators,
+  ReactiveFormsModule,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatStepperModule } from '@angular/material/stepper';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PatientService } from '@services/patient/patient.service';
+import { SnackBarService } from '@services/snackBar/snack-bar.service';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-add-patient',
   standalone: true,
   imports: [
-    MatStepperModule,
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
@@ -28,7 +26,7 @@ import { PatientService } from '@services/patient/patient.service';
     ReactiveFormsModule,
   ],
   templateUrl: './add-patient.component.html',
-  styleUrl: './add-patient.component.scss',
+  styleUrls: ['./add-patient.component.scss'],
 })
 export class AddPatientComponent {
   form: FormGroup;
@@ -40,6 +38,7 @@ export class AddPatientComponent {
     private route: ActivatedRoute,
     private router: Router,
     private patientService: PatientService,
+    private snackBarService: SnackBarService,
   ) {
     const patientData = this.route.snapshot.data['patient'];
     this.form = this.initForm(patientData);
@@ -47,68 +46,59 @@ export class AddPatientComponent {
 
   private initForm(patientData?: any): FormGroup {
     return this.fb.group({
-      basicInfo: this.fb.group({
-        name: [patientData?.name || '', Validators.required],
-        lastName: [patientData?.lastName || '', Validators.required],
-        dni: [
-          patientData?.dni || '',
-          [Validators.required, Validators.pattern(/^\d{8}$/)],
-        ],
-        cuit: [patientData?.cuit || ''],
-        birthDate: [patientData?.birthDate || null, Validators.required],
-        occupation: [patientData?.occupation || ''],
-        address: [patientData?.address || ''],
-        phone: [
-          patientData?.phone || '',
-          [Validators.required, Validators.pattern(/^[0-9]{10}$/)],
-        ],
-        email: [
-          patientData?.email || '',
-          [Validators.required, Validators.email],
-        ],
-      }),
-      additionalInfo: this.fb.group({
-        bloodPressure: [''],
-        medications: [''],
-
-        liverProblems: [''],
-        infDiseases: [''],
-        medicalConds: [''],
-        operations: [''],
-        smokingHistory: [''],
-      }),
+      name: [
+        patientData?.name || '',
+        [Validators.required, Validators.minLength(2)],
+      ],
+      lastName: [
+        patientData?.lastName || '',
+        [Validators.required, Validators.minLength(2)],
+      ],
+      dni: [
+        patientData?.dni || '',
+        [Validators.required, Validators.pattern(/^\d{8}$/)],
+      ],
+      cuit: [patientData?.cuit || '', Validators.pattern(/^\d{11}$/)],
+      birthDate: [patientData?.birthDate || null, Validators.required],
+      occupation: [patientData?.occupation || '', Validators.maxLength(50)],
+      address: [patientData?.address || '', Validators.maxLength(100)],
+      phoneNumber: [
+        patientData?.phoneNumber || '',
+        [Validators.required, Validators.pattern(/^\d{10,15}$/)],
+      ],
+      email: [
+        patientData?.email || '',
+        [Validators.required, Validators.email],
+      ],
     });
   }
 
-  // Getter para el FormGroup de información básica
-  get basicInfoForm(): FormGroup {
-    return this.form.get('basicInfo') as FormGroup;
-  }
-
-  // Getter para el FormGroup de información adicional
-  get medicHistForm(): FormGroup {
-    return this.form.get('additionalInfo') as FormGroup;
-  }
-
-  onSubmit(): void {
-    if (this.form.valid) {
-      this.isLoading = true;
-      const patientData = {
-        ...this.form.value.basicInfo,
-        ...this.form.value.additionalInfo,
-      };
-
-      this.patientService.savePatient(patientData).subscribe({
-        next: () => {
-          this.router.navigate(['/patient'], {
-            state: { successMessage: 'Paciente guardado exitosamente' },
-          });
-        },
-        error: (err) => {
-          this.isLoading = false;
-          this.errorMessage = 'Error al guardar: ' + err.message;
-        },
-      });
+  onSubmit() {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
     }
+
+    this.isLoading = true;
+    this.errorMessage = null;
+    const patientData = this.form.value;
+
+    this.patientService.savePatient(patientData).subscribe({
+      next: () => {
+        this.snackBarService.open('Paciente guardado exitosamente');
+        this.router.navigate(['/patient']);
+      },
+      error: (err) => {
+        this.isLoading = false;
+        this.errorMessage =
+          err.error?.message || 'Error inesperado al guardar el paciente';
+        console.error('Error saving patient:', err);
+      },
+      complete: () => (this.isLoading = false),
+    });
+  }
+
+  onCancel() {
+    this.router.navigate(['patient']);
   }
 }

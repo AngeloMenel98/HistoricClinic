@@ -46,26 +46,7 @@ export class PatientComponent implements OnInit {
 
   form!: FormGroup;
 
-  filteredPatients: Patient[] = [
-    {
-      id: 'PAT-001',
-      name: 'María',
-      lastName: 'López',
-      dni: '32456789',
-      occupation: 'Enfermera',
-      birthDate: new Date('1978-03-15'),
-      createdAt: new Date('2023-01-10'),
-    },
-    {
-      id: 'PAT-002',
-      name: 'Pedro',
-      lastName: 'Perez',
-      dni: '32456789',
-      occupation: 'Plomero',
-      birthDate: new Date('1978-03-16'),
-      createdAt: new Date('2023-01-10'),
-    },
-  ];
+  filteredPatients: Patient[] = [];
 
   patients: Patient[] = [];
 
@@ -109,14 +90,14 @@ export class PatientComponent implements OnInit {
           pat.name.toLowerCase().includes(lowCaseTerm),
       );
     } else {
-      this.filteredPatients = [];
+      this.filteredPatients = [...this.filteredPatients];
     }
   }
 
   private loadPatients() {
     this.patientService.getAll().subscribe({
       next: (data: Patient[]) => {
-        this.patients = data;
+        this.filteredPatients = data;
       },
       error: (e) => {},
     });
