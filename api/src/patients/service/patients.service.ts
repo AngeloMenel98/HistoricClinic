@@ -14,18 +14,16 @@ export class PatientsService {
   async create(patientDTO: CreatePatientDto, userId: string) {
     const user = await this.userService.findOne(userId);
 
-    if (patientDTO.bloodPressure) {
-    }
-
     return this.patientRepository.createPatient(patientDTO, user);
   }
 
-  findAll() {
-    const patients = this.patientRepository.findAll();
+  async findAll() {
+    const patients = await this.patientRepository.find();
 
     if (!patients) {
       throw new NotFoundException(`There is any patient created.`);
     }
+
     return patients;
   }
 

@@ -12,8 +12,9 @@ export class ResPatientDTO {
   lastName: string;
   dni?: string;
   cuit?: string;
-  birthDate?: string;
+  birthDate?: Date;
   occupation?: string;
   phoneNumber?: string;
   email?: string;
+  createdAt: Date;
 }
