@@ -1,3 +1,37 @@
-<div class="container">
-  <p>calendar works!</p>
+<div class="calendar-container">
+  <div class="calendar-header">
+    <button mat-icon-button (click)="previousMonth()">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+    <h2>{{ currentMonth | date: 'MMMM y' }}</h2>
+    <button mat-icon-button (click)="nextMonth()">
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+  </div>
+
+  <div class="weekdays">
+    @for (day of weekDays; track day) {
+      <div>{{ day }}</div>
+    }
+  </div>
+
+  <div class="days-grid">
+    @for (day of calendarDays; track day.date.getTime()) {
+      <div
+        class="day-cell"
+        [class.outside-month]="!day.isCurrentMonth"
+        [class.has-appointments]="day.appointments.length > 0"
+        (click)="selectDay(day)"
+        [matTooltip]="getDayTooltip(day)"
+      >
+        {{ day.date | date: 'd' }}
+
+        @if (day.appointments.length > 0) {
+          <div class="appointment-marker">
+            {{ day.appointments.length }}
+          </div>
+        }
+      </div>
+    }
+  </div>
 </div>

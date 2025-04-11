@@ -1,0 +1,23 @@
+<h2 mat-dialog-title>Citas del {{ formattedDate | titlecase }}</h2>
+<mat-dialog-content>
+  <mat-list>
+    @for (appt of data.appoints; track appt.date) {
+      <mat-list-item>
+        <div class="appointment-item">
+          <span class="time">{{ appt.date | date: 'HH:mm' }}</span>
+          <div class="patient-info">
+            <div>{{ appt.patientLastName }}, {{ appt.patientName }}</div>
+            <div class="treatment">{{ appt.treatmentCode }}</div>
+          </div>
+        </div>
+      </mat-list-item>
+    }
+  </mat-list>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-raised-button color="primary" (click)="addAppointment()">
+    <mat-icon>add</mat-icon>
+    Nueva Cita
+  </button>
+  <button mat-button mat-dialog-close>Cerrar</button>
+</mat-dialog-actions>

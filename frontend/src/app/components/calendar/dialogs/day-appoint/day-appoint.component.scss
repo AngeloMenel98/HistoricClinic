@@ -1,0 +1,39 @@
+.appointment-item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 8px 0;
+
+  .time {
+    width: 60px;
+    font-weight: 500;
+    color: #2196f3;
+  }
+
+  .patient-info {
+    flex: 1;
+
+    .treatment {
+      font-size: 0.9em;
+      color: #666;
+    }
+  }
+}
+
+mat-list-item {
+  border-bottom: 1px solid #eee;
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.add-button {
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  transform: scale(0.8);
+
+  &:hover {
+    transform: scale(0.9);
+  }
+}

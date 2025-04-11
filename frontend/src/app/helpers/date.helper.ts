@@ -1,3 +1,5 @@
+import { Appointment } from '@models/appointment';
+
 export function formatDateTime(date: string | Date): string {
   const dateObj = new Date(date);
 
@@ -19,4 +21,24 @@ export function formatDate(date: string | Date): string {
   const year = dateObj.getFullYear();
 
   return `${day}/${month}/${year}`;
+}
+
+export function parseAppointmentDate(appt: Appointment): {
+  date: Date;
+  year: number;
+  month: number;
+  day: number;
+  time: string;
+} {
+  const date = new Date(appt.date);
+  return {
+    date,
+    year: date.getFullYear(),
+    month: date.getMonth() + 1, // Meses de 1-12
+    day: date.getDate(),
+    time: date.toLocaleTimeString('es-ES', {
+      hour: '2-digit',
+      minute: '2-digit',
+    }),
+  };
 }
