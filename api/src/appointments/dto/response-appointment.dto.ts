@@ -1,8 +1,8 @@
 export interface ResAppointDTO {
   id: string;
-  scheduledAt: Date;
-  patientId: string;
-  dentistId: string;
+  date: Date;
+  patientName: string;
+  patientLastName: string;
   notes?: string;
   codeProcedure?: string;
 }

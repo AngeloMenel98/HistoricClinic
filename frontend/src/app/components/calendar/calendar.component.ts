@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { Appointment } from '@models/appointment';
+import { Appointment } from '@models/appointments/appointment';
 import { AppointmentService } from '@services/appointments/appointment.service';
 import { DayAppointComponent } from './dialogs/day-appoint/day-appoint.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -90,8 +90,9 @@ export class CalendarComponent implements OnInit {
 
     // 1. Normalizar todas las fechas a UTC
     this.appointments.forEach((appt) => {
+      const dateObj = new Date(appt.date);
       const utcDate = new Date(
-        appt.date.getTime() + appt.date.getTimezoneOffset() * 60000,
+        dateObj.getTime() + dateObj.getTimezoneOffset() * 60000,
       );
       const dateKey = utcDate.toISOString().split('T')[0]; // Formato YYYY-MM-DD
 
@@ -113,19 +114,32 @@ export class CalendarComponent implements OnInit {
   }
 
   selectDay(day: CalendarDay) {
-    this.dialog.open(DayAppointComponent, {
+    const appointments = day.appointments.map((a) => ({
+      ...a,
+      date: new Date(a.date),
+    }));
+
+    const dialogRef = this.dialog.open(DayAppointComponent, {
       width: '1500px',
       data: {
         date: day.date.toISOString(),
-        appoints: day.appointments.sort(
+        appoints: appointments.sort(
           (a, b) => a.date.getTime() - b.date.getTime(),
         ),
       },
     });
+
+    dialogRef.afterClosed().subscribe((app) => {
+      if (!app) return;
+
+      this.appointments = [...this.appointments, ...app];
+
+      this.groupAppointments();
+    });
   }
 
   nextMonth() {
-    this.currentDate = new Date( // <-- Crear nueva instancia
+    this.currentDate = new Date(
       this.currentDate.getFullYear(),
       this.currentDate.getMonth() + 1,
       1,

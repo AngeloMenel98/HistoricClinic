@@ -29,4 +29,13 @@ export class AppointmentRepository extends Repository<Appointment> {
       .where('a.id = :id', { id })
       .getOne();
   }
+
+  async findAll() {
+    return this.createQueryBuilder('app')
+      .innerJoinAndSelect('app.patient', 'pat')
+      .innerJoinAndSelect('app.dentist', 'den')
+      .innerJoinAndSelect('app.procedure', 'pro')
+      .leftJoinAndSelect('app.diagnosis', 'diag')
+      .getMany();
+  }
 }

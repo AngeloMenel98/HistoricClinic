@@ -15,8 +15,14 @@ export class ProceduresService {
     return this.procedureRepo.createProcedure(procedure);
   }
 
-  findAll() {
-    return `This action returns all procedures`;
+  async findAll() {
+    const procedures = await this.procedureRepo.find();
+
+    if (!procedures) {
+      throw new NotFoundException(`There is any procedure created.`);
+    }
+
+    return procedures;
   }
 
   async findById(id: string) {

@@ -1,4 +1,4 @@
-import { Appointment } from '@models/appointment';
+import { Appointment } from '@models/appointments/appointment';
 
 export function formatDateTime(date: string | Date): string {
   const dateObj = new Date(date);

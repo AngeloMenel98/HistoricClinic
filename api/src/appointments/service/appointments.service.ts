@@ -35,8 +35,13 @@ export class AppointmentsService {
     return this.appointRepository.createAppointment(appoint);
   }
 
-  findAll() {
-    return `This action returns all appointents`;
+  async findAll() {
+    const appoints = await this.appointRepository.findAll();
+
+    if (!appoints) {
+      throw new NotFoundException('There is any Appointment created');
+    }
+    return appoints;
   }
 
   findOne(id: number) {

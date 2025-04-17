@@ -29,8 +29,14 @@ export class DentistsService {
     return this.dentistRepo.createDentist(dentist);
   }
 
-  findAll() {
-    return `This action returns all dentists`;
+  async findAll() {
+    const dentists = await this.dentistRepo.find();
+
+    if (!dentists) {
+      throw new NotFoundException(`There is any dentist created.`);
+    }
+
+    return dentists;
   }
 
   async findOne(id: string) {

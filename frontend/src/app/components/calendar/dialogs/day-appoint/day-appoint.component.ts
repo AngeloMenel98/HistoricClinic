@@ -7,7 +7,7 @@ import {
   MatDialog,
 } from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list';
-import { Appointment } from '@models/appointment';
+import { Appointment } from '@models/appointments/appointment';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { AddAppointComponent } from '../add-appoint/add-appoint/add-appoint.component';
@@ -54,15 +54,19 @@ export class DayAppointComponent {
       },
     });
 
-    dialogRef.afterClosed().subscribe((newAppointment) => {
-      if (newAppointment) {
-        this.data.appoints.push(newAppointment);
-        this.data.appoints.sort(
-          (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
-        );
-        // Actualizar vista
-        this.data = { ...this.data };
-      }
+    dialogRef.afterClosed().subscribe((appt: Appointment | undefined) => {
+      if (!appt) return;
+
+      this.data.appoints.push(appt);
+      this.data.appoints.sort(
+        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+      );
+
+      this.data = { ...this.data };
     });
+  }
+
+  onCancel(): void {
+    this.dialogRef.close(this.data.appoints);
   }
 }

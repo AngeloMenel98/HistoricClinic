@@ -1,38 +1,20 @@
-import { Injectable } from '@angular/core';
-import { Appointment } from '@models/appointment';
+import { HttpClient } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
+import { Appointment, CreateAppoint } from '@models/appointments/appointment';
+import { environment } from 'environment/enviornment.dev';
 import { of, Observable } from 'rxjs';
-import { delay, map } from 'rxjs/operators';
+import { delay } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class AppointmentService {
-  private mockData: Appointment[] = [
-    {
-      date: new Date('2025-04-15T09:00:00'),
-      patientName: 'Juan',
-      patientLastName: 'Pérez',
-      treatmentCode: 'TR-145',
-    },
-    {
-      date: new Date('2025-04-15T11:30:00'),
-      patientName: 'María',
-      patientLastName: 'Gómez',
-      treatmentCode: 'TR-178',
-    },
-    {
-      date: new Date('2025-03-16T14:00:00'),
-      patientName: 'Carlos',
-      patientLastName: 'López',
-      treatmentCode: 'TR-162',
-    },
-    {
-      date: new Date('2025-09-30T17:00:00'),
-      patientName: 'Ana',
-      patientLastName: 'Martínez',
-      treatmentCode: 'TR-199',
-    },
-  ];
+  private readonly http = inject(HttpClient);
+  private apiURL = environment.apiURL;
 
   getAppointments(): Observable<Appointment[]> {
-    return of(this.mockData).pipe(delay(500));
+    return this.http.get<Appointment[]>(`${this.apiURL}/appointments`);
+  }
+
+  createAppoint(data: CreateAppoint): Observable<Appointment> {
+    return this.http.post<Appointment>(`${this.apiURL}/appointments`, data);
   }
 }

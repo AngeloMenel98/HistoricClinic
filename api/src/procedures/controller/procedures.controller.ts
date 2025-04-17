@@ -21,8 +21,15 @@ export class ProceduresController {
   }
 
   @Get()
-  findAll() {
-    return this.proceduresService.findAll();
+  async findAll() {
+    const procedures = await this.proceduresService.findAll();
+
+    return procedures.map((d) => ({
+      id: d.id,
+      name: d.name,
+      codeProcedure: d.codeProcedure,
+      createdAt: d.createdAt,
+    }));
   }
 
   @Get(':id')

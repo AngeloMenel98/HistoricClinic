@@ -7,7 +7,7 @@
           <span class="time">{{ appt.date | date: 'HH:mm' }}</span>
           <div class="patient-info">
             <div>{{ appt.patientLastName }}, {{ appt.patientName }}</div>
-            <div class="treatment">{{ appt.treatmentCode }}</div>
+            <div class="treatment">{{ appt.codeProcedure }}</div>
           </div>
         </div>
       </mat-list-item>
@@ -15,9 +15,10 @@
   </mat-list>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cerrar</button>
+
   <button mat-raised-button color="primary" (click)="addAppointment()">
     <mat-icon>add</mat-icon>
     Nueva Cita
   </button>
-  <button mat-button mat-dialog-close>Cerrar</button>
 </mat-dialog-actions>

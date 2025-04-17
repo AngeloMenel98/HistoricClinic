@@ -29,17 +29,24 @@ export class AppointmentsController {
 
     return {
       id: appoint.id,
-      scheduledAt: appoint.scheduledAt,
-      patientId: appoint.patient.id,
-      dentistId: appoint.dentist.id,
+      date: appoint.scheduledAt,
+      patientName: appoint.patient.name,
+      patientLastName: appoint.dentist.lastName,
       notes: appoint.notes,
       codeProcedure: appoint.procedure.codeProcedure,
     };
   }
 
   @Get()
-  findAll() {
-    return this.appointService.findAll();
+  async findAll() {
+    const appoints = await this.appointService.findAll();
+
+    return appoints.map((a) => ({
+      date: a.scheduledAt,
+      patientName: a.patient.name,
+      patientLastName: a.patient.lastName,
+      codeProcedure: a.procedure.codeProcedure,
+    }));
   }
 
   @Get(':id')

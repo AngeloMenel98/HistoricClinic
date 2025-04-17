@@ -37,8 +37,17 @@ export class DentistsController {
   }
 
   @Get()
-  findAll() {
-    return this.dentistsService.findAll();
+  async findAll() {
+    const dentists = await this.dentistsService.findAll();
+
+    return dentists.map((d) => ({
+      id: d.id,
+      name: d.name,
+      lastName: d.lastName,
+      professionalId: d.professionalId,
+      phoneNumber: d.phoneNumber,
+      createdAt: d.createdAt,
+    }));
   }
 
   @Get(':id')
