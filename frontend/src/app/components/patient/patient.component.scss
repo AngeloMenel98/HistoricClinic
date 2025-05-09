@@ -1,0 +1,130 @@
+@use '@angular/material' as mat;
+@use 'variables' as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 1rem;
+  overflow: hidden;
+
+  .button-row {
+    display: block;
+
+    .flex-container {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+
+      .head-container {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+
+        .product-button {
+          background-color: var(--primary-color);
+          color: var(--background-color);
+
+          transition: all 0.3s ease-in-out;
+
+          mat-icon {
+            color: inherit;
+          }
+
+          &:hover {
+            background-color: var(--light-purple);
+            color: var(--primary-color);
+          }
+        }
+
+        mat-label,
+        mat-icon {
+          color: var(--primary-color);
+        }
+
+        .hint-right {
+          width: 100%;
+          text-align: right;
+          font-weight: 400;
+          color: var(--primary-color);
+        }
+      }
+    }
+  }
+
+  .table-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding-top: 1rem;
+
+    .table-wrapper {
+      max-height: 30rem;
+      overflow-y: auto;
+      border: 3px solid var(--primary-color);
+      border-radius: 15px;
+      overflow: hidden;
+      position: relative;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+
+      table.mat-elevation-z8 {
+        @include mat.elevation(8);
+        border-collapse: collapse;
+        background: #f4f4f4;
+
+        tr.mat-mdc-header-row {
+          position: sticky;
+          top: 0;
+          background: var(--primary-color);
+          z-index: 2;
+        }
+
+        th.mat-mdc-header-cell {
+          color: var(--background-color);
+          font-weight: bold;
+          text-align: center;
+          padding: 0.75rem;
+          border-bottom: 2px solid var(--light-purple);
+        }
+
+        .mat-mdc-cell {
+          text-align: center;
+          color: var(--primary-color);
+          font-size: 18px;
+        }
+
+        .menu-button {
+          background-color: var(--background-color);
+          color: var(--primary-color);
+          border: 2px solid var(--primary-color);
+          align-items: center;
+
+          transition: all 0.3s ease;
+
+          &:hover {
+            background-color: var(--light-purple);
+            transform: scale(1.05);
+          }
+
+          mat-icon {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .mat-column-birthDate,
+  .mat-column-occupation {
+    display: none;
+  }
+}

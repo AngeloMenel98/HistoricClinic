@@ -1,0 +1,37 @@
+<div class="container">
+  <mat-stepper linear orientation="vertical">
+    @for (step of steps; track $index; let last = $last) {
+      <mat-step [stepControl]="getStepControl(step)!" [label]="step.label">
+        <ng-container
+          *ngTemplateOutlet="
+            getTemplate(step.templateId);
+            context: { isLoading: isLoading }
+          "
+        ></ng-container>
+        <div class="button-container">
+          @if (!last) {
+            <button mat-button matStepperPrevious>Atrás</button>
+            <button mat-raised-button color="primary" matStepperNext>
+              Siguiente
+            </button>
+          }
+
+          @if (last) {
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="onSubmit()"
+              [disabled]="step.formGroup.invalid || isLoading"
+            >
+              @if (isLoading) {
+                <span>Guardando...</span>
+              } @else {
+                <span>Enviar</span>
+              }
+            </button>
+          }
+        </div>
+      </mat-step>
+    }
+  </mat-stepper>
+</div>

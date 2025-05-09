@@ -1,0 +1,154 @@
+<div class="container">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-grid">
+    <!-- Sección de Información Personal -->
+    <div class="form-section">
+      <h2>Información Personal</h2>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Nombre del Paciente</mat-label>
+        <input
+          matInput
+          formControlName="name"
+          required
+          autocomplete="given-name"
+        />
+        @if (form.get('name')?.hasError('required')) {
+          <mat-error>Nombre requerido</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Apellido del Paciente</mat-label>
+        <input
+          matInput
+          formControlName="lastName"
+          required
+          autocomplete="family-name"
+        />
+        @if (form.get('lastName')?.hasError('required')) {
+          <mat-error>Apellido requerido</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Fecha de Nacimiento</mat-label>
+        <input matInput type="date" formControlName="birthDate" required />
+        @if (form.get('birthDate')?.hasError('required')) {
+          <mat-error>Fecha requerida</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <!-- Sección de Documentación -->
+    <div class="form-section">
+      <h2>Documentación</h2>
+
+      <mat-form-field appearance="fill">
+        <mat-label>DNI</mat-label>
+        <input
+          matInput
+          type="number"
+          formControlName="dni"
+          required
+          autocomplete="off"
+        />
+        @if (form.get('dni')?.hasError('required')) {
+          <mat-error>DNI requerido</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>CUIT</mat-label>
+        <input
+          matInput
+          type="number"
+          formControlName="cuit"
+          required
+          autocomplete="off"
+        />
+        @if (form.get('cuit')?.hasError('required')) {
+          <mat-error>CUIT requerido</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <!-- Sección de Contacto -->
+    <div class="form-section">
+      <h2>Datos de Contacto</h2>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          type="email"
+          formControlName="email"
+          required
+          autocomplete="email"
+        />
+        @if (form.get('email')?.hasError('required')) {
+          <mat-error>Email requerido</mat-error>
+        }
+        @if (form.get('email')?.hasError('email')) {
+          <mat-error>Formato de email inválido</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Teléfono/Celular</mat-label>
+        <input
+          matInput
+          type="tel"
+          formControlName="phoneNumber"
+          required
+          autocomplete="tel"
+        />
+        @if (form.get('phoneNumber')?.hasError('required')) {
+          <mat-error>Teléfono requerido</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Dirección</mat-label>
+        <input
+          matInput
+          formControlName="address"
+          required
+          autocomplete="street-address"
+        />
+        @if (form.get('address')?.hasError('required')) {
+          <mat-error>Dirección requerida</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <!-- Sección Adicional -->
+    <div class="form-section">
+      <h2>Información Adicional</h2>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Profesión</mat-label>
+        <input matInput formControlName="occupation" required />
+        @if (form.get('occupation')?.hasError('required')) {
+          <mat-error>Profesión requerida</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <div class="form-actions">
+      <button mat-raised-button class="cancel-button" (click)="onCancel()">
+        Cancelar Formulario
+      </button>
+    </div>
+    <div class="form-actions">
+      <button
+        mat-raised-button
+        class="product-button"
+        type="submit"
+        [disabled]="!form.valid"
+      >
+        <mat-icon>add</mat-icon>
+        Agregar Paciente
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,116 @@
+@use 'variables' as *;
+
+.container {
+  background-color: #f4f4f4;
+  padding: 1rem;
+  min-height: 100vh;
+  box-sizing: border-box;
+
+  .form-grid {
+    display: grid;
+    gap: 1em;
+    grid-template-columns: repeat(2, 1fr);
+
+    .form-section {
+      border: 1px solid var(--primary-color);
+      padding: 1rem;
+      border-radius: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      min-width: 0;
+      min-height: 300px;
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: center;
+      margin-top: 1rem;
+
+      .product-button {
+        background-color: var(--primary-color);
+        color: var(--background-color);
+        transition: all 0.3s ease-in-out;
+        padding: 0.8rem 2.5rem; // Mejor tamaño para botones
+        border-radius: 0.8rem; // Coherencia con bordes
+
+        mat-icon {
+          color: inherit;
+          margin-right: 0.5rem; // Espacio entre icono y texto
+        }
+
+        &:disabled {
+          background-color: var(--disabled-bgcol);
+          color: var(--disabled-color);
+          cursor: not-allowed;
+        }
+
+        &:hover:not(:disabled) {
+          background-color: var(--focused);
+          color: var(--primary-color);
+          transform: translateY(-2px); // Efecto hover más pronunciado
+        }
+      }
+
+      .cancel-button {
+        background-color: #f4f4f4;
+        color: var(--light-purple);
+        transition: all 0.3s ease-in-out;
+        padding: 0.8rem 2.5rem;
+        border-radius: 0.8rem;
+
+        &:hover {
+          background-color: var(--light-purple);
+          color: var(--primary-color);
+          transform: translateY(-2px); // Efecto hover más pronunciado
+        }
+      }
+    }
+  }
+
+  h2 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    text-align: center; // Centrado de títulos
+  }
+
+  mat-form-field {
+    margin-bottom: 1rem; // Espacio adicional entre inputs
+    width: 100%;
+  }
+
+  mat-error {
+    font-size: 0.75rem;
+    color: #f44336;
+    margin-top: 0.25rem;
+  }
+}
+
+/* Modificación para responsive */
+@media (max-width: 768px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+
+    .form-section {
+      padding: 1.5rem;
+      min-height: auto;
+      gap: 1rem;
+    }
+
+    .form-actions {
+      flex-direction: column;
+      width: 100%;
+
+      .product-button {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  }
+
+  .container {
+    padding: 0.5rem;
+  }
+}

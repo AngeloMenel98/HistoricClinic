@@ -1,0 +1,85 @@
+<h2 mat-dialog-title>Nueva Cita</h2>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <mat-dialog-content>
+    <div class="form-container">
+      <mat-form-field>
+        <mat-label>Paciente</mat-label>
+        <input
+          type="text"
+          matInput
+          [formControl]="patientControl"
+          [matAutocomplete]="autPat"
+        />
+        <mat-autocomplete
+          #autPat="matAutocomplete"
+          (optionSelected)="onEntitySelected('patientId', $event)"
+          [displayWith]="displayFn"
+        >
+          @for (patient of filteredPatient | async; track patient) {
+            <mat-option [value]="patient">
+              {{ patient.lastName }}, {{ patient.name }}
+            </mat-option>
+          }
+        </mat-autocomplete>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Dentista</mat-label>
+        <input
+          type="text"
+          matInput
+          [formControl]="dentistControl"
+          [matAutocomplete]="autDen"
+        />
+        <mat-autocomplete
+          #autDen="matAutocomplete"
+          (optionSelected)="onEntitySelected('dentistId', $event)"
+          [displayWith]="displayFn"
+        >
+          @for (dentist of filteredDentist | async; track dentist) {
+            <mat-option [value]="dentist">
+              {{ dentist.lastName }}, {{ dentist.name }}
+            </mat-option>
+          }
+        </mat-autocomplete>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Tratamiento</mat-label>
+        <input
+          type="text"
+          matInput
+          [formControl]="procedureControl"
+          [matAutocomplete]="autPro"
+        />
+        <mat-autocomplete
+          #autPro="matAutocomplete"
+          (optionSelected)="onEntitySelected('code', $event)"
+          [displayWith]="displayProcedure"
+        >
+          @for (procedure of filteredProcedure | async; track procedure) {
+            <mat-option [value]="procedure">
+              {{ procedure.codeProcedure }}
+            </mat-option>
+          }
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Fecha</mat-label>
+        <input
+          matInput
+          [value]="form.get('scheduledDate')?.value | date: 'dd/MM/yyyy'"
+          readonly
+        />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Hora</mat-label>
+        <input matInput type="time" formControlName="scheduledTime" />
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button mat-dialog-close>Cancelar</button>
+    <button mat-button type="submit" [disabled]="form.invalid">Guardar</button>
+  </mat-dialog-actions>
+</form>
